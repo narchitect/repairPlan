@@ -1,0 +1,1073 @@
+{
+    "room": [
+        {
+            "id": "office_1"
+        },
+        {
+            "id": "professor_office"
+        },
+        {
+            "id": "meeting_room"
+        },
+        {
+            "id": "open_cafeteria"
+        },
+        {
+            "id": "office_2"
+        }
+    ],
+    "object": [
+        {
+            "id": "Wall_42",
+            "room": "office_2"
+        },
+        {
+            "id": "Ceiling_43",
+            "room": "meeting_room"
+        },
+        {
+            "id": "Wall_44",
+            "room": "professor_office"
+        },
+        {
+            "id": "Wall_45",
+            "room": "office_2"
+        },
+        {
+            "id": "Wall_46",
+            "room": "office_1"
+        },
+        {
+            "id": "Wall_49",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_50",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Floor_51",
+            "room": "office_1"
+        },
+        {
+            "id": "Floor_52",
+            "room": "office_2"
+        },
+        {
+            "id": "Floor_53",
+            "room": "professor_office"
+        },
+        {
+            "id": "Wall_56",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_57",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_58",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Floor_59",
+            "room": "meeting_room"
+        },
+        {
+            "id": "Floor_60",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_61",
+            "room": "office_1"
+        },
+        {
+            "id": "Wall_62",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_63",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_64",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_65",
+            "room": "office_2"
+        },
+        {
+            "id": "Wall_66",
+            "room": "meeting_room"
+        },
+        {
+            "id": "Wall_67",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_68",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_70",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_71",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_72",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_73",
+            "room": "office_1"
+        },
+        {
+            "id": "Wall_75",
+            "room": "professor_office"
+        },
+        {
+            "id": "Ceiling_76",
+            "room": "office_2"
+        },
+        {
+            "id": "Wall_77",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_78",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Ceiling_79",
+            "room": "office_1"
+        },
+        {
+            "id": "Ceiling_80",
+            "room": "professor_office"
+        },
+        {
+            "id": "Wall_83",
+            "room": "office_1"
+        },
+        {
+            "id": "Wall_84",
+            "room": "professor_office"
+        },
+        {
+            "id": "Wall_85",
+            "room": "professor_office"
+        },
+        {
+            "id": "Wall_86",
+            "room": "meeting_room"
+        },
+        {
+            "id": "Wall_87",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_88",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_89",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_90",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Ceiling_91",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_92",
+            "room": "meeting_room"
+        },
+        {
+            "id": "Wall_93",
+            "room": "office_2"
+        },
+        {
+            "id": "Wall_94",
+            "room": "open_cafeteria"
+        },
+        {
+            "id": "Wall_95",
+            "room": "meeting_room"
+        }
+    ],
+    "asset": [
+        {
+            "id": "Door_5",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_16",
+            "room": "professor_office",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_17",
+            "room": "professor_office",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Door_23",
+            "room": "open_cafeteria",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Door_24",
+            "room": "open_cafeteria",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Door_25",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_26",
+            "room": "office_1",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Door_27",
+            "room": "open_cafeteria",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Door_29",
+            "room": "professor_office",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Door_32",
+            "room": "office_1",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_34",
+            "room": "office_2",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_37",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_38",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_39",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_40",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        },
+        {
+            "id": "Window_41",
+            "room": "meeting_room",
+            "state": "closed",
+            "affordances": [
+                "open",
+                "close"
+            ]
+        }
+    ],
+    "links": [
+        [
+            "meeting_room",
+            "Door_5"
+        ],
+        [
+            "professor_office",
+            "Window_16"
+        ],
+        [
+            "professor_office",
+            "Window_17"
+        ],
+        [
+            "open_cafeteria",
+            "Door_23"
+        ],
+        [
+            "office_1",
+            "Door_23"
+        ],
+        [
+            "open_cafeteria",
+            "Door_24"
+        ],
+        [
+            "office_2",
+            "Door_24"
+        ],
+        [
+            "meeting_room",
+            "Door_25"
+        ],
+        [
+            "open_cafeteria",
+            "Door_25"
+        ],
+        [
+            "office_1",
+            "Window_26"
+        ],
+        [
+            "open_cafeteria",
+            "Door_27"
+        ],
+        [
+            "professor_office",
+            "Door_29"
+        ],
+        [
+            "office_1",
+            "Door_32"
+        ],
+        [
+            "professor_office",
+            "Door_32"
+        ],
+        [
+            "office_2",
+            "Window_34"
+        ],
+        [
+            "office_2",
+            "Wall_42"
+        ],
+        [
+            "meeting_room",
+            "Ceiling_43"
+        ],
+        [
+            "professor_office",
+            "Wall_44"
+        ],
+        [
+            "office_2",
+            "Wall_45"
+        ],
+        [
+            "office_1",
+            "Wall_46"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_49"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_50"
+        ],
+        [
+            "office_1",
+            "Floor_51"
+        ],
+        [
+            "office_2",
+            "Floor_52"
+        ],
+        [
+            "professor_office",
+            "Floor_53"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_56"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_57"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_58"
+        ],
+        [
+            "meeting_room",
+            "Floor_59"
+        ],
+        [
+            "open_cafeteria",
+            "Floor_60"
+        ],
+        [
+            "office_1",
+            "Wall_61"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_62"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_63"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_64"
+        ],
+        [
+            "office_2",
+            "Wall_65"
+        ],
+        [
+            "meeting_room",
+            "Wall_66"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_67"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_68"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_70"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_71"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_72"
+        ],
+        [
+            "office_1",
+            "Wall_73"
+        ],
+        [
+            "professor_office",
+            "Wall_75"
+        ],
+        [
+            "office_2",
+            "Ceiling_76"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_77"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_78"
+        ],
+        [
+            "office_1",
+            "Ceiling_79"
+        ],
+        [
+            "professor_office",
+            "Ceiling_80"
+        ],
+        [
+            "office_1",
+            "Wall_83"
+        ],
+        [
+            "professor_office",
+            "Wall_84"
+        ],
+        [
+            "professor_office",
+            "Wall_85"
+        ],
+        [
+            "meeting_room",
+            "Wall_86"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_87"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_88"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_89"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_90"
+        ],
+        [
+            "open_cafeteria",
+            "Ceiling_91"
+        ],
+        [
+            "meeting_room",
+            "Wall_92"
+        ],
+        [
+            "office_2",
+            "Wall_93"
+        ],
+        [
+            "open_cafeteria",
+            "Wall_94"
+        ],
+        [
+            "meeting_room",
+            "Wall_95"
+        ],
+        [
+            "Wall_64",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_63",
+            "Wall_64"
+        ],
+        [
+            "Floor_60",
+            "Wall_88"
+        ],
+        [
+            "Wall_68",
+            "Ceiling_91"
+        ],
+        [
+            "Floor_53",
+            "Wall_85"
+        ],
+        [
+            "Wall_49",
+            "Floor_60"
+        ],
+        [
+            "Wall_58",
+            "Floor_60"
+        ],
+        [
+            "Wall_42",
+            "Wall_65"
+        ],
+        [
+            "Wall_66",
+            "Wall_69"
+        ],
+        [
+            "Ceiling_43",
+            "Wall_66"
+        ],
+        [
+            "Wall_77",
+            "Wall_78"
+        ],
+        [
+            "Floor_60",
+            "Wall_72"
+        ],
+        [
+            "Wall_45",
+            "Floor_52"
+        ],
+        [
+            "Floor_59",
+            "Wall_86"
+        ],
+        [
+            "Wall_54",
+            "Floor_60"
+        ],
+        [
+            "Wall_67",
+            "Wall_68"
+        ],
+        [
+            "Wall_42",
+            "Wall_82"
+        ],
+        [
+            "Wall_48",
+            "Wall_66"
+        ],
+        [
+            "Wall_49",
+            "Wall_70"
+        ],
+        [
+            "Ceiling_79",
+            "Wall_83"
+        ],
+        [
+            "Floor_60",
+            "Wall_70"
+        ],
+        [
+            "Wall_57",
+            "Floor_60"
+        ],
+        [
+            "Floor_60",
+            "Wall_62"
+        ],
+        [
+            "Floor_59",
+            "Wall_69"
+        ],
+        [
+            "Wall_74",
+            "Wall_86"
+        ],
+        [
+            "Wall_47",
+            "Wall_86"
+        ],
+        [
+            "Wall_58",
+            "Wall_68"
+        ],
+        [
+            "Floor_60",
+            "Wall_68"
+        ],
+        [
+            "Wall_71",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_50",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_62",
+            "Wall_63"
+        ],
+        [
+            "Wall_69",
+            "Wall_74"
+        ],
+        [
+            "Wall_70",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_89",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_42",
+            "Ceiling_76"
+        ],
+        [
+            "Ceiling_80",
+            "Wall_85"
+        ],
+        [
+            "Wall_61",
+            "Ceiling_79"
+        ],
+        [
+            "Wall_46",
+            "Wall_73"
+        ],
+        [
+            "Floor_60",
+            "Wall_71"
+        ],
+        [
+            "Wall_81",
+            "Wall_82"
+        ],
+        [
+            "Wall_89",
+            "Wall_90"
+        ],
+        [
+            "Wall_55",
+            "Floor_60"
+        ],
+        [
+            "Wall_54",
+            "Wall_55"
+        ],
+        [
+            "Floor_60",
+            "Wall_89"
+        ],
+        [
+            "Wall_87",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_47",
+            "Wall_48"
+        ],
+        [
+            "Floor_51",
+            "Wall_83"
+        ],
+        [
+            "Wall_75",
+            "Wall_84"
+        ],
+        [
+            "Wall_56",
+            "Wall_57"
+        ],
+        [
+            "Wall_78",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_46",
+            "Ceiling_79"
+        ],
+        [
+            "Floor_60",
+            "Wall_67"
+        ],
+        [
+            "Wall_44",
+            "Floor_53"
+        ],
+        [
+            "Floor_60",
+            "Wall_63"
+        ],
+        [
+            "Wall_77",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_50",
+            "Wall_64"
+        ],
+        [
+            "Floor_51",
+            "Wall_73"
+        ],
+        [
+            "Wall_44",
+            "Wall_85"
+        ],
+        [
+            "Floor_60",
+            "Wall_77"
+        ],
+        [
+            "Wall_88",
+            "Wall_89"
+        ],
+        [
+            "Wall_45",
+            "Wall_65"
+        ],
+        [
+            "Wall_75",
+            "Ceiling_80"
+        ],
+        [
+            "Ceiling_76",
+            "Wall_82"
+        ],
+        [
+            "Floor_59",
+            "Wall_74"
+        ],
+        [
+            "Wall_48",
+            "Floor_59"
+        ],
+        [
+            "Ceiling_43",
+            "Wall_47"
+        ],
+        [
+            "Wall_57",
+            "Wall_77"
+        ],
+        [
+            "Wall_71",
+            "Wall_88"
+        ],
+        [
+            "Floor_53",
+            "Wall_84"
+        ],
+        [
+            "Wall_56",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_46",
+            "Wall_61"
+        ],
+        [
+            "Wall_49",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_50",
+            "Floor_60"
+        ],
+        [
+            "Floor_52",
+            "Wall_65"
+        ],
+        [
+            "Floor_59",
+            "Wall_66"
+        ],
+        [
+            "Wall_70",
+            "Wall_72"
+        ],
+        [
+            "Wall_65",
+            "Ceiling_76"
+        ],
+        [
+            "Floor_60",
+            "Wall_87"
+        ],
+        [
+            "Wall_54",
+            "Ceiling_91"
+        ],
+        [
+            "Ceiling_76",
+            "Wall_81"
+        ],
+        [
+            "Wall_45",
+            "Ceiling_76"
+        ],
+        [
+            "Wall_73",
+            "Wall_83"
+        ],
+        [
+            "Floor_52",
+            "Wall_82"
+        ],
+        [
+            "Floor_51",
+            "Wall_61"
+        ],
+        [
+            "Wall_54",
+            "Wall_87"
+        ],
+        [
+            "Wall_62",
+            "Ceiling_91"
+        ],
+        [
+            "Ceiling_43",
+            "Wall_86"
+        ],
+        [
+            "Ceiling_80",
+            "Wall_84"
+        ],
+        [
+            "Wall_67",
+            "Ceiling_91"
+        ],
+        [
+            "Ceiling_43",
+            "Wall_69"
+        ],
+        [
+            "Floor_52",
+            "Wall_81"
+        ],
+        [
+            "Ceiling_43",
+            "Wall_48"
+        ],
+        [
+            "Floor_60",
+            "Wall_78"
+        ],
+        [
+            "Wall_72",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_42",
+            "Floor_52"
+        ],
+        [
+            "Wall_58",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_50",
+            "Wall_67"
+        ],
+        [
+            "Wall_44",
+            "Wall_84"
+        ],
+        [
+            "Wall_56",
+            "Floor_60"
+        ],
+        [
+            "Wall_72",
+            "Wall_90"
+        ],
+        [
+            "Floor_60",
+            "Wall_90"
+        ],
+        [
+            "Wall_58",
+            "Wall_87"
+        ],
+        [
+            "Wall_90",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_57",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_61",
+            "Wall_83"
+        ],
+        [
+            "Wall_63",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_45",
+            "Wall_81"
+        ],
+        [
+            "Wall_88",
+            "Ceiling_91"
+        ],
+        [
+            "Wall_49",
+            "Wall_62"
+        ],
+        [
+            "Wall_44",
+            "Ceiling_80"
+        ],
+        [
+            "Wall_75",
+            "Wall_85"
+        ],
+        [
+            "Floor_60",
+            "Wall_64"
+        ],
+        [
+            "Wall_71",
+            "Wall_78"
+        ],
+        [
+            "Wall_55",
+            "Wall_56"
+        ],
+        [
+            "Wall_47",
+            "Floor_59"
+        ],
+        [
+            "Wall_46",
+            "Floor_51"
+        ],
+        [
+            "Ceiling_43",
+            "Wall_74"
+        ],
+        [
+            "Wall_73",
+            "Ceiling_79"
+        ],
+        [
+            "Wall_55",
+            "Ceiling_91"
+        ]
+    ]
+}
