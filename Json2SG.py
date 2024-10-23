@@ -56,28 +56,28 @@ label_mapping = {
     24: 'Space',
     25: 'SpaceHeater',
     26: 'Proxy',
-    999: 'Roof'  # Assuming label 999 corresponds to 'Roof'
-    # Add other labels if necessary
+    999: 'Other'
 }
 
 # Categories
-element_labels = {1, 2, 3, 999}  # Wall, Floor, Ceiling, Roof
+element_labels = {1, 2, 3}  # Wall, Floor, Ceiling, Roof
 component_labels = {4, 5}        # Door, Window
 space_label = 24                 # Space
 
 # Load the original JSON data
 with open('output.json', 'r') as file:
-    data = json.load(file)
+    graphmlData = json.load(file)
 
-# Load the pem.csv file and create a mapping from guid_int to match_id
-pem_mapping = {}
+# Load the pem.csv file and create a mapping
+pem_data = {}
 with open('pem.csv', 'r', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
-        guid_int = row.get('guid_int')
-        match_id = row.get('match_id')
-        if guid_int and match_id:
-            pem_mapping[guid_int] = match_id
+        guid_int = row.get('guid_int', '').strip()
+        pem_data[guid_int] = {
+            'parent_element': row.get('parent_element', '').strip(),
+            'ifc_guid': row.get('ifc_guid', '').strip()
+        }
 
 # Lists to hold spaces, elements, and components
 spaces = []
@@ -85,7 +85,7 @@ elements = []
 components = []
 
 # Process each node
-for node in data['nodes']:
+for node in graphmlData['nodes']:
     label = node['label']
     node_type = label_mapping.get(label, 'Other')
 
@@ -100,17 +100,50 @@ for node in data['nodes']:
     size_x, size_y, size_z = pca_to_size(
         pca1, pca2, pca3, extent_pca1, extent_pca2, extent_pca3)
 
-    # Get the 'ifc_guid', and if it's missing or 'NaN', replace it using pem_mapping
+    # Get the 'ifc_guid', and if it's NaN, replace it using pem_data
     ifc_guid = node.get('ifc_guid', '')
-    if not ifc_guid or (isinstance(ifc_guid, float) and math.isnan(ifc_guid)):
+
+    if isinstance(ifc_guid, float) and math.isnan(ifc_guid):
         node_id = node.get('id', '')
-        # The 'id' in the node corresponds to 'guid_int' in pem.csv
-        node_id_str = str(node_id)
-        if node_id_str in pem_mapping:
-            ifc_guid = pem_mapping[node_id_str]
+        node_id_str = str(node_id).strip()
+        if node_id_str in pem_data:
+            # Get the parent_element(s) from pem_data
+            parent_elements = pem_data[node_id_str].get('parent_element', '')
+            # Remove square brackets if present
+            parent_elements = parent_elements.strip('[]')
+            # Split and strip the parent IDs
+            parent_ids = [pid.strip() for pid in parent_elements.split(',') if pid.strip()]
+
+            ifc_guids = []
+            for parent_id in parent_ids:
+                # Ensure parent_id is a string and strip any whitespace
+                parent_id_str = str(parent_id).strip()
+                # Convert parent_id_str to integer to remove decimal points
+                try:
+                    parent_id_int = int(float(parent_id_str))
+                    parent_id_str = str(parent_id_int)
+                except ValueError:
+                    print(f"Invalid parent_id '{parent_id_str}' for node id: {node_id_str}")
+                    continue  # Skip this parent_id if it cannot be converted
+
+                parent_data = pem_data.get(parent_id_str)
+                if parent_data:
+                    parent_ifc_guid = parent_data.get('ifc_guid', '').strip()
+                    if parent_ifc_guid:
+                        ifc_guids.append(parent_ifc_guid)
+                    else:
+                        print(f"No ifc_guid in parent_data for parent_id: '{parent_id_str}'")
+                else:
+                    print(f"Parent data not found for parent_id: '{parent_id_str}'")
+            if ifc_guids:
+                # If multiple ifc_guids, decide how to handle them (e.g., join them)
+                ifc_guid = ','.join(ifc_guids)
+            else:
+                ifc_guid = ''
+                print(f"No ifc_guid found for parent elements of node id: {node_id_str}")
         else:
-            ifc_guid = ''  # If not found, leave it empty or handle as needed
-            print(f"ifc_guid not found for node id: {node_id_str}")
+            ifc_guid = ''
+            print(f"Node id {node_id_str} not found in pem.csv")
 
     # Prepare the new node
     new_node = {
@@ -146,8 +179,8 @@ for node in data['nodes']:
 
 # Process links from the original JSON
 links = []
-if 'links' in data:
-    for link in data['links']:
+if 'links' in graphmlData:
+    for link in graphmlData['links']:
         source = link.get('source')
         target = link.get('target')
         if source and target:
@@ -162,7 +195,7 @@ new_data = {
 }
 
 # Save the new JSON file
-with open('new_structure.json', 'w') as file:
+with open('3D_Scene_Graph_Large.json', 'w') as file:
     json.dump(new_data, file, indent=4)
 
 print("New JSON file 'new_structure.json' has been created with spaces, elements, components, and links.")
