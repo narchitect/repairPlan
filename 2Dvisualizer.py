@@ -2,7 +2,7 @@ import networkx as nx
 from pyvis.network import Network
 from planner import load_scene_graph
 
-data = load_scene_graph("data/scene_graph_final.json")
+data = load_scene_graph("data/small_sceneGraph.json")
 
 # Create a new graph
 G = nx.Graph()
@@ -45,7 +45,7 @@ color_map = {
 }
 
 # Initialize PyVis Network
-net = Network(height='750px', width='100%', bgcolor='#222222', font_color='white')
+net = Network(height='1800px', width='100%', bgcolor='#222222', font_color='white')
 
 # Add nodes with custom styles
 for node, attrs in G.nodes(data=True):

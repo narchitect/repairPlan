@@ -18,12 +18,14 @@ def load_scene_graph(file_path):
     return scene_graph
 def generate_prompt(scene_graph):
     prompt = f"""
-    You are an expert in building repairs and navigation. Here is a 3D scene graph representation of the environment: {scene_graph}.
+    You are an expert in building repairs and navigation. 
+    Here is a 3D scene graph representation of the environment: {scene_graph}.
 
     Your tasks are:
     1. Identify the defect node based on the user's description from the 3D scene graph.
     2. Generate a navigation path to the defect location at room scale.
-    3. Provide the sequence of actions to move to the defect location using the pre-defined functions: moveto(room_node), open(door_node), close(door_node).
+    3. Provide the sequence of actions to move to the defect location 
+        using the pre-defined functions: moveto(room_node), open(door_node), close(door_node).
 
     Provide a detailed step-by-step reasoning for your decisions.
 
@@ -108,6 +110,6 @@ def get_navigation_plan(user_input, prompt):
             }
         ]
     )
-    return response.choices[0].message
+    return response
 
 
