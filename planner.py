@@ -1,16 +1,6 @@
 import json
 import openai
-from pydantic import BaseModel
-from typing import List
 
-def moveto(room_node):
-    print(f"Robot is moving to {room_node}.")
-
-def open_door(door_node):
-    print(f"Robot is opening {door_node}.")
-
-def close_door(door_node):
-    print(f"Robot is closing {door_node}.")
 
 def load_scene_graph(file_path):
     with open(file_path, 'r') as f:
