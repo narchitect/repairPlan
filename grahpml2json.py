@@ -2,9 +2,9 @@ import networkx as nx
 import json
 
 # Replace 'input.graphml' with the path to your GraphML file
-graphml_file = '/Users/nayunkim/Documents/GitHub/thesis/data/graphs/output_withroommodification/bim_room_graph.graphml'
+graphml_file = '/Users/nayunkim/Documents/GitHub/thesis/data/graphs/output_modifiedCOR/bim_room_graph.graphml'
 # Replace 'output.json' with the desired output JSON file name
-json_file = './output.json'
+json_file = 'graphml.json'
 
 # Read the GraphML file
 G = nx.read_graphml(graphml_file)

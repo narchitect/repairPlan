@@ -65,7 +65,7 @@ component_labels = {4, 5}        # Door, Window
 space_label = 24                 # Space
 
 # Load the original JSON data
-with open('output.json', 'r') as file:
+with open('graphml.json', 'r') as file:
     graphmlData = json.load(file)
 
 # Load the pem.csv file and create a mapping
@@ -150,6 +150,11 @@ for node in graphmlData['nodes']:
         'id': node['id'],
         'ifc_guid': ifc_guid,
         'type': node_type,
+        'location': {
+            'x': node['cp_x'],
+            'y': node['cp_y'],
+            'z': node['cp_z']
+        },
         'size': {
             'x': size_x,
             'y': size_y,
@@ -183,19 +188,24 @@ if 'links' in graphmlData:
     for link in graphmlData['links']:
         source = link.get('source')
         target = link.get('target')
+        weight = link.get('width')
         if source and target:
-            links.append([source, target])
+            links.append({
+                'source': source,
+                'target': target,
+                'width': weight
+            })
 
 # Create the new JSON structure
 new_data = {
     'spaces': spaces,
     'elements': elements,
     'components': components,
-    'links': links  # Add the links here
+    'links': links
 }
 
 # Save the new JSON file
-with open('3D_Scene_Graph_Large.json', 'w') as file:
+with open('3D_Scene_Graph_Large_withCOR.json', 'w') as file:
     json.dump(new_data, file, indent=4)
 
 print("New JSON file 'new_structure.json' has been created with spaces, elements, components, and links.")
