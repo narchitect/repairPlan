@@ -1,76 +1,11 @@
 import json
 import openai
-from pydantic import BaseModel
-from typing import List
-
-json_schema = {
-    "type": "object",
-    "properties": {
-        "defect_node": {
-            "type": "string",
-            "description": "The identifier of the defect node in 3D scene graphs based on user description."
-        },
-        "selected_robots": {
-            "type": "object",
-            "properties": {
-                "reachable_robots": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "The identifiers of the reachable robots to the defect location."
-                },
-                "accessible_robots": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "The identifiers of the accessible robots to the defect location."
-                },
-                "reachableAndAccessible_robots": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "The identifiers of the robots that are both reachable and accessible to the defect location."
-                }
-            },
-            "required": ["reachable_robots", "accessible_robots", "reachableAndAccessible_robots"],
-            "additionalProperties": False
-        },
-        "navigation_paths": {
-            "type": "object",
-            "properties": {
-                "path": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "Sequence of identifiers representing the navigation path (rooms and doors)."
-                },
-                "rooms": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "List of room identifiers in the navigation path."
-                },
-                "doors": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "List of door identifiers in the navigation path."
-                }
-            },
-            "required": ["path", "rooms", "doors"],
-            "additionalProperties": False
-        },
-        "reasoning": {
-            "type": "string",
-            "description": "Comprehensive step-by-step reasoning for all decisions made."
-        }
-    },
-    "required": ["defect_node", "selected_robots", "navigation_paths", "reasoning"],
-    "additionalProperties": False
-}
-
 
 
 def load_scene_graph(file_path):
     with open(file_path, 'r') as f:
         scene_graph = json.load(f)
     return scene_graph
-
-
 def generate_prompt(scene_graph, robots):
     prompt = f"""
         You are an expert in building repairs and navigation, with in-depth knowledge of various robot capabilities.
@@ -108,19 +43,45 @@ def generate_prompt(scene_graph, robots):
 
         5. **Final Output:**
            - Provide a JSON object with the following structure:
+             {{
+               "defect_node": "defect_node_id",
+               "defect_node_ifcGUID": "defect_node_ifcGUID",
+               "selected_robots": ["robot_id", "robot_id", ...],
+               "navigation_paths": [
+                   {{
+                       "path": ["space id", "door id", "door id", "door id", "space id"],
+                   }},
+               ],
+               "reasoning": "Comprehensive step-by-step reasoning for all decisions made."
+             }}
 
         **Constraints:**
         - Ensure that the selected robots have the necessary actions to address the defect.
         - Maintain clear and logical reasoning for each step.
-        - Structure your response by first detailing your reasoning for each task, followed by the final JSON schema.
+        - Structure your response by first detailing your reasoning for each task, followed by the final JSON output.
         
-        **Example Reasoning Format:**
+        **Example Format:**
         1. **Identify Defect:**
            - Reasoning: [Your detailed reasoning here.]
         
         2. **Check Reachability:**
            - Reasoning: [Your detailed reasoning here.]
-           """
+        ...
+
+         **Final Output:**
+        ```json
+        {{
+           "defect_node": "node id",
+           "defect_node_ifcGUID": "defect node's ifc_guid",
+           "selected_robots": ["robot id", "robot id", ...],
+           "navigation_paths": [
+               {{
+                   "path": ["space id", "door id", "door id", "door id", "room id"],
+               }},
+           ],
+           "reasoning": "Comprehensive step-by-step reasoning for all decisions made."
+         }}
+    """
     return prompt
 
 
@@ -130,7 +91,7 @@ def get_navigation_plan(user_input, scene_graph, robots):
     user_message = user_input
 
     response = openai.chat.completions.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         messages=[
             {
                 "role": "system",
@@ -141,14 +102,8 @@ def get_navigation_plan(user_input, scene_graph, robots):
                 "content": user_message
             }
         ],
-        response_format={
-            "type": "json_schema",
-            "json_schema": {
-                "name": "navigation_plan",
-                "strict": True,
-                "schema": json_schema
-            }
-        }
+        temperature=0.3,
+        max_tokens=2500
     )
 
     full_response = response.choices[0].message.content
@@ -173,3 +128,5 @@ def get_navigation_plan(user_input, scene_graph, robots):
 
     # Return both navigation plan and reasoning
     return full_response
+
+

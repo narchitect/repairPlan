@@ -205,7 +205,7 @@ new_data = {
 }
 
 # Save the new JSON file
-with open('3D_Scene_Graph_Large_withCOR.json', 'w') as file:
+with open('data/sceneGraphs/3D_Scene_Graph_Large_withCOR.json', 'w') as file:
     json.dump(new_data, file, indent=4)
 
 print("New JSON file 'new_structure.json' has been created with spaces, elements, components, and links.")

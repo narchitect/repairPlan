@@ -13,7 +13,7 @@ all_actions = [
 
 #Screw/Unscrew
 robot1 = {
-    'name': 'robot1',
+    'id': 'robot1',
     'actions': [
         'NavigateToLocation',
         'ScanObject',
@@ -28,7 +28,7 @@ robot1 = {
 
 #only Screw
 robot2 = {
-    'name': 'robot2',
+    'id': 'robot2',
     'actions': [
         'NavigateToLocation',
         'ScanObject',
@@ -42,7 +42,7 @@ robot2 = {
 
 #only testing
 robot3 = {
-    'name': 'robot3',
+    'id': 'robot3',
     'actions': [
         'NavigateToLocation',
         'TurnSwitchOn',
@@ -54,7 +54,7 @@ robot3 = {
 
 #only grasp/release
 robot4 = {
-    'name': 'robot4',
+    'id': 'robot4',
     'actions': [
         'NavigateToLocation',
         'GraspObject',
@@ -66,7 +66,7 @@ robot4 = {
 
 #only clean
 robot5 = {
-    'name': 'robot5',
+    'id': 'robot5',
     'actions': [
         'NavigateToLocation',
         'GraspObject',
@@ -79,7 +79,7 @@ robot5 = {
 
 #clean and paint
 robot6 = {
-    'name': 'robot6',
+    'id': 'robot6',
     'actions': [
         'NavigateToLocation',
         'GraspObject',
@@ -93,7 +93,7 @@ robot6 = {
 
 #ALL
 robot7 = {
-    'name': 'robot7',
+    'id': 'robot7',
     'actions': [
         'NavigateToLocation',
         'ScanObject',
@@ -112,7 +112,7 @@ robot7 = {
 
 #without scanning
 robot8 = {
-    'name': 'robot8',
+    'id': 'robot8',
     'actions': [
         'NavigateToLocation',
         'GraspObject',
@@ -130,7 +130,7 @@ robot8 = {
 
 #without grasp/release
 robot9 = {
-    'name': 'robot9',
+    'id': 'robot9',
     'actions': [
         'NavigateToLocation',
         'ScanObject',
@@ -147,7 +147,7 @@ robot9 = {
 
 #without screw/unscrew
 robot10 = {
-    'name': 'robot10',
+    'id': 'robot10',
     'actions': [
         'NavigateToLocation',
         'ScanObject',
