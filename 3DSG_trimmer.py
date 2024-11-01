@@ -41,7 +41,7 @@ filtered_data = {
 }
 
 # Save the filtered data to a new JSON file
-with open('data/sceneGraphs/Filtered_Scene_Graph_Structure.json', 'w') as outfile:
+with open('data/sceneGraphs/trimmed_3dsg.json', 'w') as outfile:
     json.dump(filtered_data, outfile, indent=4)
 
-print("Filtered data saved to /mnt/data/Filtered_Scene_Graph_Structure.json")
+print("Filtered data saved to /mnt/data/trimmed_3dsg.json")
