@@ -186,14 +186,13 @@ for node in graphmlData['nodes']:
 links = []
 if 'links' in graphmlData:
     for link in graphmlData['links']:
-        source = link.get('source')
-        target = link.get('target')
-        weight = link.get('width')
-        if source and target:
+        node1 = link.get('source')
+        node2 = link.get('target')
+        width = link.get('width')
+        if node1 and node2 and width is not None:
             links.append({
-                'source': source,
-                'target': target,
-                'width': weight
+                "nodes": [node1, node2],
+                "width": width
             })
 
 # Create the new JSON structure
@@ -205,7 +204,7 @@ new_data = {
 }
 
 # Save the new JSON file
-with open('data/sceneGraphs/3D_Scene_Graph_Large_withCOR.json', 'w') as file:
+with open('data/sceneGraphs/3D_Scene_Graph_Large_withCOR2.json', 'w') as file:
     json.dump(new_data, file, indent=4)
 
 print("New JSON file 'new_structure.json' has been created with spaces, elements, components, and links.")
