@@ -1,8 +1,6 @@
 
 import networkx as nx
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-import planner
 import numpy as np
 
 # 데이터 로드

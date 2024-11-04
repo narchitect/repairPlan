@@ -23,7 +23,7 @@ def load_scene_graph(filepath):
 
 
 # Load the scene graph data
-data = load_scene_graph("data/sceneGraphs/3D_Scene_Graph_large.json")
+data = load_scene_graph("../data/sceneGraphs/3D_Scene_Graph_large.json")
 
 # Create a new graph
 G = nx.Graph()

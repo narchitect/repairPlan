@@ -1,6 +1,6 @@
 import networkx as nx
 from pyvis.network import Network
-from planner import load_scene_graph
+from planner.planner import load_scene_graph
 
 data = load_scene_graph("data/scene_graph_final.json")
 

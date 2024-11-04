@@ -5,23 +5,22 @@ import json
 client = OpenAI(api_key = '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')
 
 # Load the trimmed and full 3D Scene Graphs
-with open('data/sceneGraphs/trimmed_3dsg.json') as trimmed_file:
+with open('../data/sceneGraphs/3dsg_withIds.json') as trimmed_file:
     trimmed_3dsg = json.load(trimmed_file)
 
-with open('data/sceneGraphs/full_3dsg.json') as full_file:
+with open('../data/sceneGraphs/full_3dsg.json') as full_file:
     full_3dsg = json.load(full_file)
 
+messages = []
+messages.append({"role": "system", "content": "You are an assistant to identify defects in a 3D scene graph."})
+messages.append({"role": "user", "content": f"Here is a 3D scene graph of the building: {trimmed_3dsg}"})
 
 # Function to find defect node based on user instruction
-def find_defect_node(defect_description, scene_graphs):
+def find_defect_node(user_description):
+    messages.append({"role": "user", "content": f"Identify the defect object ID and room ID based on the user description: {user_description}"})
     response = client.chat.completions.create(
         model="gpt-4o",
-        messages=[
-            {"role": "system", "content": "You are an assistant to identify defects in a 3D scene graph."},
-            {"role": "user", "content": f"Here is a 3D scene graph: {scene_graphs}"},
-            {"role": "user",
-             "content": f"Identify the defect object ID and room ID based on the following description: {defect_description}"}
-        ],
+        messages=messages,
         functions=[
             {
                 "name": "get_defect_info",
@@ -70,11 +69,10 @@ def get_defect_and_room_info(defect_object_id, room_id):
     }
 
 
-# Example defect description
-user_description = "There is a stain on the ceiling in room id 8."
+
 
 # Find defect node IDs based on user description
-defect_object_id, room_id = find_defect_node(user_description, trimmed_3dsg)
+defect_object_id, room_id = find_defect_node(user_description)
 if defect_object_id and room_id:
     print(f"Defect Object ID: {defect_object_id}, Room ID: {room_id}")
 

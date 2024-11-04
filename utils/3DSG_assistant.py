@@ -14,7 +14,7 @@ assistant = client.beta.assistants.create(
 
 vector_store = client.beta.vector_stores.create(name="3DSceneGraph")
 
-file_paths = ["/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/3D_Scene_Graph_Large_withCOR.json"]
+file_paths = ["/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/3dsg_withCOR.json"]
 file_streams = [open(path, "rb") for path in file_paths]
 
 file_bath = client.beta.vector_stores.file_batches.upload_and_poll(
@@ -30,7 +30,7 @@ assistant = client.beta.assistants.update(
 )
 
 message_file = client.files.create(
-    file=open("/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/3D_Scene_Graph_Large_withCOR.json", "rb"), purpose="assistants"
+    file=open("/data/sceneGraphs/3dsg_withCOR.json", "rb"), purpose="assistants"
 )
 
 thread = client.beta.threads.create(

@@ -1,7 +1,7 @@
 import json
 
 # Load the JSON file
-with open('data/sceneGraphs/3D_Scene_Graph_Large_withCOR.json', 'r') as file:
+with open('../data/sceneGraphs/3dsg_withCOR.json', 'r') as file:
     data = json.load(file)
 
 # Function to filter nodes while keeping necessary attributes
@@ -41,7 +41,7 @@ filtered_data = {
 }
 
 # Save the filtered data to a new JSON file
-with open('data/sceneGraphs/trimmed_3dsg.json', 'w') as outfile:
+with open('../data/sceneGraphs/3dsg_withIds.json', 'w') as outfile:
     json.dump(filtered_data, outfile, indent=4)
 
-print("Filtered data saved to /mnt/data/trimmed_3dsg.json")
+print("Filtered data saved to /mnt/data/3dsg_withIds.json")

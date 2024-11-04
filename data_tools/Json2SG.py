@@ -65,12 +65,12 @@ component_labels = {4, 5}        # Door, Window
 space_label = 24                 # Space
 
 # Load the original JSON data
-with open('graphml.json', 'r') as file:
+with open('../data/graphs/BIM_COR/graphml.json', 'r') as file:
     graphmlData = json.load(file)
 
 # Load the pem.csv file and create a mapping
 pem_data = {}
-with open('pem.csv', 'r', newline='', encoding='utf-8') as csvfile:
+with open('../data/graphs/BIM_COR/pem.csv', 'r', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         guid_int = row.get('guid_int', '').strip()
@@ -150,11 +150,11 @@ for node in graphmlData['nodes']:
         'id': node['id'],
         'ifc_guid': ifc_guid,
         'type': node_type,
-        'location': {
-            'x': node['cp_x'],
-            'y': node['cp_y'],
-            'z': node['cp_z']
-        },
+        # 'location': {
+        #     'x': node['cp_x'],
+        #     'y': node['cp_y'],
+        #     'z': node['cp_z']
+        # },
         'size': {
             'x': size_x,
             'y': size_y,
@@ -204,7 +204,7 @@ new_data = {
 }
 
 # Save the new JSON file
-with open('data/sceneGraphs/full_3dsg.json', 'w') as file:
+with open('../data/sceneGraphs/3dsg_withSize.json', 'w') as file:
     json.dump(new_data, file, indent=4)
 
 print("New JSON file 'new_structure.json' has been created with spaces, elements, components, and links.")
