@@ -1,6 +1,8 @@
 actions = [
     'navigateTo<object>',
     'scan<object>',
+    'load<equipment>',
+    'unload<equipment>',
     'pickUp<object>',
     'putDown<object>',
     'placeInTrashBag'
@@ -261,3 +263,17 @@ robot10 = {
 }
 
 robots = [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
+
+
+def get_robot_info_by_id(robot_ids):
+    selected_robots = [robot for robot in robots if robot['id'] in robot_ids]
+
+    result = {
+        "robot_configs": {
+            "actions": actions,
+            "equipments": equipments,
+            "materials": materials,
+        },
+        "robots": selected_robots
+    }
+    return result

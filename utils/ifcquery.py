@@ -4,7 +4,7 @@ import ifcopenshell.util.element
 
 
 # Load the IFC file
-ifc_file = "/Users/nayunkim/Documents/GitHub/thesis/data/models/Library_Borrmann_alex_Leica_v6_Extended_withRoomModifiation.ifc"
+ifc_file = "/Users/nayunkim/Documents/GitHub/thesis/data/models/Library_Borrmann_alex_Leica_v6_Exteneded_ModifiedCOR.ifc"
 
 
 def get_object_info_by_guid(ifc_file_path, guid):
@@ -56,7 +56,7 @@ def get_object_info_by_guid(ifc_file_path, guid):
 
 # Usage example
 
-guid = "0x8tDwgKz4rBhuBSTQ03VX"  # Replace with the GUID you want to query
+guid = "2Vw5Ga4Dz31wA6t7ociBOo"  # Replace with the GUID you want to query
 
 
 print(get_object_info_by_guid(ifc_file, guid))
