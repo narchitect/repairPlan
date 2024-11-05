@@ -45,4 +45,4 @@ def get_associated_nodes(node_id):
         'associated_elements': associated_nodes
     }
 
-    return json.dumps(result, indent=4)
+    return result
