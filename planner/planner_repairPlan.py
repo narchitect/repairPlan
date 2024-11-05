@@ -23,6 +23,10 @@ def plan_robot_task(user_info, robot_info, env_info):
     - The robot's actions are defined with parameters, e.g., 'navigateTo<object>'.
     - Use appropriate parameters enclosed in '<>', where '<object>' is the node ID from the 3D scene graph.
     - Ensure that the action sequence uses node IDs from the environment data.
+    - Consider the relationship between actions and the equipment loaded.
+    - The robot is a one-arm robot; it can only load one equipment at a time.
+    - The robot must unload equipment before loading another equipment.
+    - At the end of the task, the robot should unload all equipment.
 
     Your tasks are:
     1. Select the most efficient robot from the robot library to repair the defect described.

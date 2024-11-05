@@ -46,5 +46,3 @@ def get_associated_nodes(node_id):
     }
 
     return json.dumps(result, indent=4)
-
-print(get_associated_nodes('537'))

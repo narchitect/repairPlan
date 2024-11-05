@@ -11,7 +11,7 @@ actions = [
     'smoothSurface<object>',
 ]
 equipments = [
-    'sprayGun <material>',
+    'sprayGun<object><material>',
     'brush',
     'wiper',
     'scraper',
