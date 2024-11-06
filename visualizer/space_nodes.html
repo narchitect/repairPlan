@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1200px ;
+                 background-color: #222222;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#1f78b4", "font": {"color": "white"}, "id": "0", "label": "0", "shape": "dot", "size": 5, "title": "Space ID: 0", "x": -80.03500000000001, "y": 494.861}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "1", "label": "1", "shape": "dot", "size": 5, "title": "Space ID: 1", "x": -82.6925, "y": 1113.994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "2", "label": "2", "shape": "dot", "size": 5, "title": "Space ID: 2", "x": -82.6925, "y": 166.31599999999997}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "3", "label": "3", "shape": "dot", "size": 5, "title": "Space ID: 3", "x": -104.1925, "y": 79.2235}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "4", "label": "4", "shape": "dot", "size": 5, "title": "Space ID: 4", "x": -51.5925, "y": 648.236}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "7", "label": "7", "shape": "dot", "size": 5, "title": "Space ID: 7", "x": -138.785, "y": 640.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "8", "label": "8", "shape": "dot", "size": 5, "title": "Space ID: 8", "x": -125.285, "y": 357.6665}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "119", "label": "119", "shape": "dot", "size": 5, "title": "Space ID: 119", "x": -261.239, "y": 100.6045}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "288", "label": "288", "shape": "dot", "size": 5, "title": "Space ID: 288", "x": -181.8925, "y": 156.54699999999997}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "289", "label": "289", "shape": "dot", "size": 5, "title": "Space ID: 289", "x": -181.8925, "y": 215.6855}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "290", "label": "290", "shape": "dot", "size": 5, "title": "Space ID: 290", "x": -169.7775, "y": 28.25}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "291", "label": "291", "shape": "dot", "size": 5, "title": "Space ID: 291", "x": -181.8925, "y": 275.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "292", "label": "292", "shape": "dot", "size": 5, "title": "Space ID: 292", "x": -181.8925, "y": 315.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "293", "label": "293", "shape": "dot", "size": 5, "title": "Space ID: 293", "x": -181.8925, "y": 355.28599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "294", "label": "294", "shape": "dot", "size": 5, "title": "Space ID: 294", "x": -181.8925, "y": 395.28599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "295", "label": "295", "shape": "dot", "size": 5, "title": "Space ID: 295", "x": -181.8925, "y": 435.28599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "296", "label": "296", "shape": "dot", "size": 5, "title": "Space ID: 296", "x": -181.8925, "y": 472.78599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "297", "label": "297", "shape": "dot", "size": 5, "title": "Space ID: 297", "x": -181.8925, "y": 507.2575}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "298", "label": "298", "shape": "dot", "size": 5, "title": "Space ID: 298", "x": -192.89249999999998, "y": 608.5360000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "299", "label": "299", "shape": "dot", "size": 5, "title": "Space ID: 299", "x": -192.89249999999998, "y": 690.0360000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "300", "label": "300", "shape": "dot", "size": 5, "title": "Space ID: 300", "x": -181.8925, "y": 1005.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "301", "label": "301", "shape": "dot", "size": 5, "title": "Space ID: 301", "x": -181.8925, "y": 965.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "302", "label": "302", "shape": "dot", "size": 5, "title": "Space ID: 302", "x": -181.8925, "y": 925.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "303", "label": "303", "shape": "dot", "size": 5, "title": "Space ID: 303", "x": -181.8925, "y": 865.2860000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "304", "label": "304", "shape": "dot", "size": 5, "title": "Space ID: 304", "x": -181.8925, "y": 1104.424}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "305", "label": "305", "shape": "dot", "size": 5, "title": "Space ID: 305", "x": -181.8925, "y": 1045.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "306", "label": "306", "shape": "dot", "size": 5, "title": "Space ID: 306", "x": -181.8925, "y": 1190.714}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "307", "label": "307", "shape": "dot", "size": 5, "title": "Space ID: 307", "x": -181.8925, "y": 1160.788}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "308", "label": "308", "shape": "dot", "size": 5, "title": "Space ID: 308", "x": -16.974999999999998, "y": 28.25}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "309", "label": "309", "shape": "dot", "size": 5, "title": "Space ID: 309", "x": -33.0, "y": 105.595}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "310", "label": "310", "shape": "dot", "size": 5, "title": "Space ID: 310", "x": -33.0, "y": 155.83749999999998}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "311", "label": "311", "shape": "dot", "size": 5, "title": "Space ID: 311", "x": -48.075, "y": 28.25}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "312", "label": "312", "shape": "dot", "size": 5, "title": "Space ID: 312", "x": -30.3425, "y": 395.28599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "313", "label": "313", "shape": "dot", "size": 5, "title": "Space ID: 313", "x": -30.3425, "y": 468.33599999999996}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "314", "label": "314", "shape": "dot", "size": 5, "title": "Space ID: 314", "x": -51.5925, "y": 539.386}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "315", "label": "315", "shape": "dot", "size": 5, "title": "Space ID: 315", "x": -30.3425, "y": 593.2860000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "316", "label": "316", "shape": "dot", "size": 5, "title": "Space ID: 316", "x": -80.03500000000001, "y": 593.2860000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "317", "label": "317", "shape": "dot", "size": 5, "title": "Space ID: 317", "x": -181.8925, "y": 737.2860000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "318", "label": "318", "shape": "dot", "size": 5, "title": "Space ID: 318", "x": -51.5925, "y": 695.786}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "319", "label": "319", "shape": "dot", "size": 5, "title": "Space ID: 319", "x": -51.5925, "y": 774.7860000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "320", "label": "320", "shape": "dot", "size": 5, "title": "Space ID: 320", "x": -51.5925, "y": 945.286}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "321", "label": "321", "shape": "dot", "size": 5, "title": "Space ID: 321", "x": -125.285, "y": 922.6595}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "322", "label": "322", "shape": "dot", "size": 5, "title": "Space ID: 322", "x": -51.5925, "y": 1084.8705}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "323", "label": "323", "shape": "dot", "size": 5, "title": "Space ID: 323", "x": -33.0, "y": 1161.562}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "324", "label": "324", "shape": "dot", "size": 5, "title": "Space ID: 324", "x": -104.1925, "y": 1193.352}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "325", "label": "325", "shape": "dot", "size": 5, "title": "Space ID: 325", "x": -16.150000000000002, "y": 1237.8664999999999}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "326", "label": "326", "shape": "dot", "size": 5, "title": "Space ID: 326", "x": -47.25, "y": 1237.8664999999999}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "327", "label": "327", "shape": "dot", "size": 5, "title": "Space ID: 327", "x": -80.03500000000001, "y": 452.41100000000006}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "328", "label": "328", "shape": "dot", "size": 5, "title": "Space ID: 328", "x": -80.03500000000001, "y": 420.88599999999997}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "329", "label": "329", "shape": "dot", "size": 5, "title": "Space ID: 329", "x": -80.03500000000001, "y": 392.78599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "330", "label": "330", "shape": "dot", "size": 5, "title": "Space ID: 330", "x": -51.5925, "y": 335.28599999999994}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "331", "label": "331", "shape": "dot", "size": 5, "title": "Space ID: 331", "x": -51.5925, "y": 235.6855}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "332", "label": "332", "shape": "dot", "size": 5, "title": "Space ID: 332", "x": -181.8925, "y": 95.8045}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "333", "label": "333", "shape": "dot", "size": 5, "title": "Space ID: 333", "x": -204.285, "y": 40.7}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "334", "label": "334", "shape": "dot", "size": 5, "title": "Space ID: 334", "x": -204.285, "y": 14.350000000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "335", "label": "335", "shape": "dot", "size": 5, "title": "Space ID: 335", "x": -33.0, "y": 65.1}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "336", "label": "336", "shape": "dot", "size": 5, "title": "Space ID: 336", "x": -181.8925, "y": 771.2110000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "337", "label": "337", "shape": "dot", "size": 5, "title": "Space ID: 337", "x": -181.8925, "y": 807.4610000000001}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "338", "label": "338", "shape": "dot", "size": 5, "title": "Space ID: 338", "x": -181.8925, "y": 541.5075}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "339", "label": "339", "shape": "dot", "size": 5, "title": "Space ID: 339", "x": -33.0, "y": 1196.062}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "340", "label": "340", "shape": "dot", "size": 5, "title": "Space ID: 340", "x": -181.8925, "y": 1233.2925}, {"color": "#1f78b4", "font": {"color": "white"}, "id": "341", "label": "341", "shape": "dot", "size": 5, "title": "Space ID: 341", "x": -33.0, "y": 1124.0085000000001}]);
+                  edges = new vis.DataSet([]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": false,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

@@ -117,7 +117,11 @@ fig.update_layout(
     scene=dict(
         xaxis=dict(title='X', showbackground=False),
         yaxis=dict(title='Y', showbackground=False),
-        zaxis=dict(title='Z', showbackground=False)
+        zaxis=dict(title='Z', showbackground=False),
+        camera=dict(
+            eye=dict(x=0, y=0, z=2),
+            projection=dict(type='orthographic'),
+        )
     ),
     showlegend=False
 )
