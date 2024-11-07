@@ -91,7 +91,7 @@ def get_navigation_plan(user_input, scene_graph, robots):
     user_message = user_input
 
     response = openai.chat.completions.create(
-        model="gpt-4o-mini",
+        model="chatgpt-4o-latest",
         messages=[
             {
                 "role": "system",
@@ -117,6 +117,7 @@ def get_navigation_plan(user_input, scene_graph, robots):
             print("JSON 디코딩 오류가 발생했습니다.")
     else:
         print("JSON 출력 부분을 찾을 수 없습니다.")
+
 
     return full_response, json_output
 
