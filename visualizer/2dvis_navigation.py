@@ -34,7 +34,7 @@ for component in data['components']:
         G.add_node(component['id'], pos=(adjusted_x, adjusted_y), node_type=component['type'])
 
 # 시각화할 네비게이션 경로 예시 (문과 공간으로 구성된 노드 ID 리스트)
-path = ["332", "1", "2", "3", "320"]  # 사용자가 원하는 경로의 노드 ID로 변경
+path = ["119"]  # 사용자가 원하는 경로의 노드 ID로 변경
 
 # 경로에 포함된 노드와 엣지를 순서대로 추가
 H = nx.DiGraph()  # 방향 그래프로 생성하여 화살표 순서를 명확히 함

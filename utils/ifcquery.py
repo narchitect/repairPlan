@@ -56,7 +56,7 @@ def get_object_info_by_guid(ifc_file_path, guid):
 
 # Usage example
 
-guid = "3ieRYLDdzA7A223TPufELQ"  # Replace with the GUID you want to query
+guid = "0x8tDwgKz4rBhuBSTQ03Sx"  # Replace with the GUID you want to query
 
 
 print(get_object_info_by_guid(ifc_file, guid))
