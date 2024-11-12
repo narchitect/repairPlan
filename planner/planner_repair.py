@@ -1,5 +1,6 @@
 import json
 from openai import OpenAI
+import re
 
 client = OpenAI(api_key='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')
 
@@ -50,10 +51,19 @@ def plan_robot_task(user_info, robot_info, env_info):
             {"role": "system", "content": "You are an assistant that helps with robot action planning."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=2500,
+        max_tokens=500,
         temperature=0,
     )
 
     full_response = response.choices[0].message.content
-    return full_response
+    json_match = re.search(r'```json\n(.*?)\n```', full_response, re.DOTALL)
+    if json_match:
+        json_output = json_match.group(1)
+        try:
+            json_output = json.loads(json_output)
+        except json.JSONDecodeError:
+            print("JSON 디코딩 오류가 발생했습니다.")
+    else:
+        print("JSON 출력 부분을 찾을 수 없습니다.")
+    return json_output
 
