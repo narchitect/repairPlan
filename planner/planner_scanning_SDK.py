@@ -10,9 +10,11 @@ client = OpenAI(
 
 
 class ScanningPosition(BaseModel):
-    optimal_location: Dict[str, float]
-    optimal_direction: List[float]
-    reasoning: str
+    optimal_location: List[float] = Field(..., description="Optimal coordinates")
+    optimal_direction: List[float] = Field(..., description="Optimal direction as a vector")
+    reasoning: str = Field(..., description="Explanation for each step taken")
+
+
 
 
 # Function to find the optimal scanning location
@@ -37,7 +39,7 @@ def find_optimal_location(env_data, camera_fov):
 
     Please provide the reasoning steps as a chain of thought, include the formulas used, and finally output as:
     {{
-        "optimal_location" : {{"x": x_value, "y": y_value, "z": z_value}},
+        "optimal_location" : [x_coordinate, y_coordinate, z_coordinate],
         "optimal_direction": [ x_value, y_value, z_value ],
         "reasoning": "the reasons for each steps",
     }}
@@ -45,13 +47,13 @@ def find_optimal_location(env_data, camera_fov):
 
     # Call the OpenAI API
     response = client.beta.chat.completions.parse(
-        model="chatgpt-4o-latest",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": prompt}
         ],
         response_format=ScanningPosition,
-        max_tokens=500,
+        max_tokens=1000,
         temperature=0,
     )
 

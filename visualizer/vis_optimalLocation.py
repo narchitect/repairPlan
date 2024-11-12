@@ -2,16 +2,15 @@ import plotly.graph_objects as go
 import numpy as np
 
 def visualize_scanPosition(env_data, camera_fov, camera_location, camera_direction):
-    # 최적 스캔 위치와 시야각(FOV) 정의
-    optimal_location = camera_location
+    # 시야각(FOV) 정의
     fov = camera_fov
 
     # 타겟 위치 (결함 표면 위치)
     defect_loc = env_data['defect_node']['location']
     target_position = np.array([defect_loc['x'], defect_loc['y'], defect_loc['z']])
-    camera_position = np.array(camera_location)
 
-    # 최적 카메라 방향 설정
+    # 카메라 위치와 방향 설정
+    camera_position = np.array(camera_location)
     optimal_camera_direction = np.array(camera_direction)
 
     # 시각화를 위한 요소 필터링
@@ -58,8 +57,8 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
             fig.add_trace(go.Mesh3d(x=x_vals, y=y_vals, z=z_vals, i=i, j=j, k=k,
                                     color=color, opacity=0.5, flatshading=True, hoverinfo='skip'))
 
-    # 최적 스캔 위치 표시
-    fig.add_trace(go.Scatter3d(x=[optimal_location['x']], y=[optimal_location['y']], z=[optimal_location['z']],
+    # 카메라 위치 표시
+    fig.add_trace(go.Scatter3d(x=[camera_position[0]], y=[camera_position[1]], z=[camera_position[2]],
                                mode='markers', marker=dict(size=5, color='black'), name='Camera Position'))
 
     # 타겟 위치 표시
@@ -120,41 +119,40 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
     # 그래프 표시
     fig.show()
 
-# # 함수 호출 예시
-# gpt4o1_env  = {
-#     'defect_node': {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
-#                     'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
-#                     'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
-#     'associated_spaces': [
-#         {'id': '330', 'ifc_guid': '0x8tDwgKz4rBhuBSTQ03Vo', 'type': 'Space',
-#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 7.85},
-#          'size': {'x': 9.799, 'y': 7.86, 'z': 3.7}}
-#     ],
-#     'associated_elements': [
-#         {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
-#          'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
-#          'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
-#         {'id': '474', 'ifc_guid': '1T7BPQ_hn69uk5$Jp8cv99', 'type': 'Ceiling',
-#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 3.7},
-#          'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
-#         {'id': '707', 'ifc_guid': '0a$DTcOc10$eWx3Py5JFns', 'type': 'Floor',
-#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 0.0},
-#          'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
-#         {'id': '779', 'ifc_guid': '26kn7MqLL9oOOTivXpgCJg', 'type': 'Wall',
-#          'location': {'x': -5.15925, 'y': -29.5986, 'z': 1.85},
-#          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
-#         {'id': '792', 'ifc_guid': '1XD1GHfzD6cunMzxtqLi4o', 'type': 'Wall',
-#          'location': {'x': -10.0585, 'y': -33.5286, 'z': 1.85},
-#          'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
-#         {'id': '818', 'ifc_guid': '26kn7MqLL9oOOTivXpgDiH,26kn7MqLL9oOOTivXpgDiH', 'type': 'Wall',
-#          'location': {'x': -5.15925, 'y': -37.4586, 'z': 1.85},
-#          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
-#     ]
-# }
-#
-#
-# gpt4o_answer = { "x": -2.11,
-#     "y": -33.5286,
-#     "z": 1.85}
-# gpt4o1_answer = {'x': -4.605, 'y': -33.5286, 'z': 1.85}
-# visualize_scanPosition(gpt4o1_env, camera_fov=90, camera_location=gpt4o_answer, camera_direction=[1, 0, 0])
+
+# 함수 호출 예시
+gpt4o1_env  = {
+    'defect_node': {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
+                    'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
+                    'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+    'associated_spaces': [
+        {'id': '330', 'ifc_guid': '0x8tDwgKz4rBhuBSTQ03Vo', 'type': 'Space',
+         'location': {'x': -5.15925, 'y': -33.5286, 'z': 7.85},
+         'size': {'x': 9.799, 'y': 7.86, 'z': 3.7}}
+    ],
+    'associated_elements': [
+        {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
+         'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
+         'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+        {'id': '474', 'ifc_guid': '1T7BPQ_hn69uk5$Jp8cv99', 'type': 'Ceiling',
+         'location': {'x': -5.15925, 'y': -33.5286, 'z': 3.7},
+         'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
+        {'id': '707', 'ifc_guid': '0a$DTcOc10$eWx3Py5JFns', 'type': 'Floor',
+         'location': {'x': -5.15925, 'y': -33.5286, 'z': 0.0},
+         'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
+        {'id': '779', 'ifc_guid': '26kn7MqLL9oOOTivXpgCJg', 'type': 'Wall',
+         'location': {'x': -5.15925, 'y': -29.5986, 'z': 1.85},
+         'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
+        {'id': '792', 'ifc_guid': '1XD1GHfzD6cunMzxtqLi4o', 'type': 'Wall',
+         'location': {'x': -10.0585, 'y': -33.5286, 'z': 1.85},
+         'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+        {'id': '818', 'ifc_guid': '26kn7MqLL9oOOTivXpgDiH,26kn7MqLL9oOOTivXpgDiH', 'type': 'Wall',
+         'location': {'x': -5.15925, 'y': -37.4586, 'z': 1.85},
+         'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
+    ]
+}
+
+
+gpt4o_answer = [-2.11, -33.5286, 1.85]
+gpt4o1_answer = [-4.605, -33.5286,  1.85]
+visualize_scanPosition(gpt4o1_env, camera_fov=90, camera_location=gpt4o1_answer, camera_direction=[1, 0, 0])
