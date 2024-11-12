@@ -9,7 +9,7 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
     # 타겟 위치 (결함 표면 위치)
     defect_loc = env_data['defect_node']['location']
     target_position = np.array([defect_loc['x'], defect_loc['y'], defect_loc['z']])
-    camera_position = np.array([optimal_location['x'], optimal_location['y'], optimal_location['z']])
+    camera_position = np.array(camera_location)
 
     # 최적 카메라 방향 설정
     optimal_camera_direction = np.array(camera_direction)
@@ -157,4 +157,4 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
 #     "y": -33.5286,
 #     "z": 1.85}
 # gpt4o1_answer = {'x': -4.605, 'y': -33.5286, 'z': 1.85}
-visualize_scanPosition(gpt4o1_env, camera_fov=90, camera_location=gpt4o_answer, camera_direction=[1, 0, 0])
+# visualize_scanPosition(gpt4o1_env, camera_fov=90, camera_location=gpt4o_answer, camera_direction=[1, 0, 0])
