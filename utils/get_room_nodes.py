@@ -40,9 +40,9 @@ def get_associated_nodes(node_id):
 
     # Prepare the result
     result = {
-        'defect_node': node,
-        'associated_spaces': associated_spaces,
-        'associated_elements': associated_nodes
+        "defect_node": node,
+        "associated_spaces": associated_spaces,
+        "associated_elements": associated_nodes
     }
 
     return result
