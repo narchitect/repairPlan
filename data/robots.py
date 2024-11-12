@@ -1,165 +1,291 @@
-all_actions = [
-    'NavigateToLocation',
-    'ScanObject',
-    'GraspObject',
-    'ReleaseObject',
-    'TurnSwitchOn',
-    'TurnSwitchOff',
-    'Unscrew',
-    'Screw',
-    'CleanSurface',
-    'PaintSurface'
+actions = [
+    'navigateTo<object>',
+    'scan<object>',
+    'load<equipment>',
+    'unload<equipment>',
+    'pickUp<object>',
+    'putDown<object>',
+    'placeInTrashBag'
+    'spray<object>',
+    'wipeSurface<object>',
+    'smoothSurface<object>',
+]
+equipments = [
+    'sprayGun<object><material>',
+    'brush',
+    'wiper',
+    'scraper',
+    'gripper'
 ]
 
-#Screw/Unscrew
+materials = [
+    'cleaning Solution',
+    'disinfectant',
+    'paint',
+    'filler'
+]
+
 robot1 = {
     'id': '1',
     'actions': [
-        'NavigateToLocation',
-        'ScanObject',
-        'GraspObject',
-        'ReleaseObject',
-        'Unscrew',
-        'Screw'
-    ],  
-    'size': {'width': 700, 'height': 1900},
-    'max_reach_height': 2500
+        'navigateTo',
+        'scan',
+        'pickUp',
+        'putDown',
+        'placeInTrashBag',
+        'spray',
+        'wipeSurface',
+        'smoothSurface',
+    ],
+    'equipments': [
+        'sprayGun',
+        'brush',
+        'wiper',
+        'scraper',
+        'gripper'
+    ],
+    'materials': [
+        'cleaning Solution',
+        'disinfectant',
+        'paint',
+        'filler'
+    ],
+    'size': {'width': 700, 'height': 1500},  # Small size
+    'max_reach_height': 2000  # Can reach up to 2 meters
 }
 
-#only Screw
 robot2 = {
     'id': '2',
     'actions': [
-        'NavigateToLocation',
-        'ScanObject',
-        'GraspObject',
-        'ReleaseObject',
-        'Screw'
-    ],  
-    'size': {'width': 800, 'height': 2100},
-    'max_reach_height': 3000
+        'navigateTo',
+        'scan',
+        'pickUp',
+        'putDown',
+        'placeInTrashBag',
+        'spray',
+        'wipeSurface',
+        'smoothSurface',
+    ],
+    'equipments': [
+        'sprayGun',
+        'brush',
+        'wiper',
+        'scraper',
+        'gripper'
+    ],
+    'materials': [
+        'cleaning Solution',
+        'disinfectant',
+        'paint',
+        'filler'
+    ],
+    'size': {'width': 850, 'height': 1700},  # Medium size
+    'max_reach_height': 3000  # Can reach up to 3 meters
 }
 
-#only testing
+
 robot3 = {
     'id': '3',
     'actions': [
-        'NavigateToLocation',
-        'TurnSwitchOn',
-        'TurnSwitchOff',
-    ],  
-    'size': {'width': 900, 'height': 2200},
-    'max_reach_height': 3500
+        'navigateTo',
+        'scan',
+        'pickUp',
+        'putDown',
+        'placeInTrashBag',
+        'spray',
+        'wipeSurface',
+        'smoothSurface',
+    ],
+    'equipments': [
+        'sprayGun',
+        'brush',
+        'wiper',
+        'scraper',
+        'gripper'
+    ],
+    'materials': [
+        'cleaning Solution',
+        'disinfectant',
+        'paint',
+        'filler'
+    ],
+    'size': {'width': 1600, 'height': 2000},  # Large size
+    'max_reach_height': 3700  # Can reach up to ceiling height
 }
 
-#only grasp/release
+
 robot4 = {
     'id': '4',
     'actions': [
-        'NavigateToLocation',
-        'GraspObject',
-        'ReleaseObject'
+        'navigateTo',
+        'scan',
+        'pickUp',
+        'putDown',
+        'placeInTrashBag',
+        'spray',
+        'wipeSurface',
+        'smoothSurface',
     ],
-    'size': {'width': 1600, 'height': 2400},
-    'max_reach_height': 3700
+    'equipments': [
+        'sprayGun',
+        'brush',
+        'wiper',
+        'scraper',
+        'gripper'
+    ],
+    'materials': [
+        'cleaning Solution',
+        'disinfectant',
+        'paint',
+        'filler'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 2000  # Limited reach
 }
 
-#only clean
 robot5 = {
     'id': '5',
     'actions': [
-        'NavigateToLocation',
-        'GraspObject',
-        'ReleaseObject',
-        'CleanSurface'
+        'navigateTo',
+        'scan',
+        'pickUp',
+        'putDown',
+        'placeInTrashBag',
+        'spray',
+        'wipeSurface',
+        'smoothSurface',
     ],
-    'size': {'width': 1400, 'height': 2000},
-    'max_reach_height': 2800
+    'equipments': [
+        'sprayGun',
+        'brush',
+        'wiper',
+        'scraper',
+        'gripper'
+    ],
+    'materials': [
+        'cleaning Solution',
+        'disinfectant',
+        'paint',
+        'filler'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 3700  # Maximum reach
 }
 
-#clean and paint
+
 robot6 = {
     'id': '6',
     'actions': [
-        'NavigateToLocation',
-        'GraspObject',
-        'ReleaseObject',
-        'CleanSurface',
-        'PaintSurface'
+        'navigateTo',
+        'scan',
+        'wipeSurface'
     ],
-    'size': {'width': 750, 'height': 2050},
-    'max_reach_height': 2300
+    'equipments': [
+        'wiper'
+    ],
+    'materials': [
+        'cleaning Solution'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 3700  # Can reach windows up to ceiling height
 }
 
-#ALL
+
 robot7 = {
     'id': '7',
     'actions': [
-        'NavigateToLocation',
-        'ScanObject',
-        'GraspObject',
-        'ReleaseObject',
-        'TurnSwitchOn',
-        'TurnSwitchOff',
-        'Unscrew',
-        'Screw',
-        'CleanSurface',
-        'PaintSurface'
+        'navigateTo',
+        'scan',
+        'spray',
+        'wipeSurface'
     ],
-    'size': {'width': 800, 'height': 2000},
-    'max_reach_height': 2200
+    'equipments': [
+        'sprayGun',
+        'wiper'
+    ],
+    'materials': [
+        'disinfectant'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 2000  # Door handles are typically within 1m - 1.5m
 }
 
-#without scanning
 robot8 = {
     'id': '8',
     'actions': [
-        'NavigateToLocation',
-        'GraspObject',
-        'ReleaseObject',
-        'TurnSwitchOn',
-        'TurnSwitchOff',
-        'Unscrew',
-        'Screw',
-        'CleanSurface',
-        'PaintSurface'
+        'navigateTo',
+        'scan',
+        'spray'
     ],
-    'size': {'width': 700, 'height': 1950},
-    'max_reach_height': 2600
+    'equipments': [
+        'sprayGun'
+    ],
+    'materials': [
+        'paint'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 3700  # Can paint walls up to ceiling height
 }
 
-#without grasp/release
+
 robot9 = {
     'id': '9',
     'actions': [
-        'NavigateToLocation',
-        'ScanObject',
-        'TurnSwitchOn',
-        'TurnSwitchOff',
-        'Unscrew',
-        'Screw',
-        'CleanSurface',
-        'PaintSurface'
+        'navigateTo',
+        'scan',
+        'smoothSurface'
     ],
-    'size': {'width': 1700, 'height': 2500},
-    'max_reach_height': 3200
+    'equipments': [
+        'scraper',
+        'brush'
+    ],
+    'materials': [
+        'filler'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 3700  # Can reach cracks at any height
 }
 
-#without screw/unscrew
 robot10 = {
     'id': '10',
     'actions': [
-        'NavigateToLocation',
-        'ScanObject',
-        'GraspObject',
-        'ReleaseObject',
-        'TurnSwitchOn',
-        'TurnSwitchOff',
-        'CleanSurface',
-        'PaintSurface'
+        'navigateTo',
+        'scan',
+        'pickUp',
+        'putDown',
+        'placeInTrashBag'
     ],
-    'size': {'width': 500, 'height': 1800},
-    'max_reach_height': 4000
+    'equipments': [
+        'gripper'
+    ],
+    'size': {'width': 700, 'height': 1600},  # Fits all doors
+    'max_reach_height': 2000  # Sufficient for ground-level trash collection
 }
 
+robots_withoutConfig = {
+        "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
+    }
+robots_withConfig = {
+        "robot_configs": {
+            "actions": actions,
+            "equipments": equipments,
+            "materials": materials,
+        },
+        "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
+    }
+
 robots = [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
+
+
+def get_robot_info_by_id(robot_ids):
+    selected_robots = [robot for robot in robots if robot['id'] in robot_ids]
+
+    result = {
+        "robot_configs": {
+            "actions": actions,
+            "equipments": equipments,
+            "materials": materials,
+        },
+        "robots": selected_robots
+    }
+    return result
