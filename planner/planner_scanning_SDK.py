@@ -23,7 +23,6 @@ def find_optimal_location(env_data, camera_fov):
     Your task is to help determine the optimal scanning location for a robot to inspect defects within a building environment. 
     Consider factors such as the robot's field of view, environmental obstacles, and the defect's location when providing calculations and recommendations."""
 
-    # Prepare the prompt for OpenAI API
     prompt = f"""
     Given the environment data and a camera with {camera_fov} degrees Field of View (FOV), find the optimal camera location to scan the defect object and the optimal camera directino to scan the entire area of the defect.
 
