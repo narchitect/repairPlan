@@ -1,5 +1,5 @@
-from planner.planner_inspection import get_inspectionPlan
-from planner.planner_optimalLoation import find_optimal_location
+from planner.planner_navigation import get_inspectionPlan
+from planner.planner_scanning import find_optimal_location
 from planner.planner_repair import plan_robot_task
 from utils.get_room_nodes import get_associated_nodes
 from visualizer.vis_optimalLocation import visualize_scanPosition

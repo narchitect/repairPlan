@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import matplotlib.image as mpimg
-from planner.planner import load_scene_graph
+from utils.loader import load_scene_graph
 
 def overlay_navigation_path(path, data, image_path, output_path):
     # 배경 이미지 로드

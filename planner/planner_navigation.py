@@ -2,7 +2,6 @@ import json
 import openai
 import re
 
-
 def initialPlan_stage1(user_input, scene_graph, robots):
     prompt = f"""
     You are an excellent graph search agent and an expert in building repairs and navigation, with in-depth knowledge robot capabilities.
