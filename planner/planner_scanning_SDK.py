@@ -15,26 +15,18 @@ class ScanningPosition(BaseModel):
     reasoning: str = Field(..., description="Explanation for each step taken")
 
 
-
-
 # Function to find the optimal scanning location
-def find_optimal_location(env_data, camera_fov):
+def get_scanning_plan(env_data, camera_fov):
     system = """You are an assistant specializing in robot action planning and environment analysis. 
     Your task is to help determine the optimal scanning location for a robot to inspect defects within a building environment. 
     Consider factors such as the robot's field of view, environmental obstacles, and the defect's location when providing calculations and recommendations."""
 
-    prompt = f"""
-    Given the environment data and a camera with {camera_fov} degrees Field of View (FOV), find the optimal camera location to scan the defect object and the optimal camera directino to scan the entire area of the defect.
+    prompt = f"""    
+    Given the following information:
+    Environment data: {env_data}
+    Camera degrees Field of View (FOV): {camera_fov}
 
-    Note: The "location" of each object represents the central point coordinate of that object.
-
-    Environment Data:
-    - Defect Node: {env_data['defect_node']}
-    - Associated Spaces: {env_data['associated_spaces']}
-    - Associated Elements: {env_data['associated_elements']}
-
-    Important
-    the location key in nodes are central coordinate of the object. 
+    Consdiering the given data, find the optimal camera location to scan the defect object and the optimal camera direction to scan the entire area of the defect.
 
     Please provide the reasoning steps as a chain of thought, include the formulas used, and finally output as:
     {{
@@ -56,4 +48,6 @@ def find_optimal_location(env_data, camera_fov):
         temperature=0,
     )
 
-    return response.choices[0].message.parsed
+    output = response.choices[0].message.parsed
+
+    return output.optimal_location, output.optimal_direction, output.reasoning

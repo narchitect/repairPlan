@@ -1,265 +1,243 @@
 actions = [
-    'navigateTo<object>',
-    'scan<object>',
-    'load<equipment>',
-    'unload<equipment>',
-    'pickUp<object>',
-    'putDown<object>',
-    'placeInTrashBag'
-    'spray<object>',
-    'wipeSurface<object>',
-    'smoothSurface<object>',
+    "load<equipment>",
+    "unload<equipment>",
+    "pickUp<object>",
+    "putDown<object>",
+    "placeInTrashBag"
+    "spray<object>",
+    "wipeSurface<object>",
+    "smoothSurface<object>",
 ]
 equipments = [
-    'sprayGun<object><material>',
-    'brush',
-    'wiper',
-    'scraper',
-    'gripper'
+    "sprayGun<object><material>",
+    "brush",
+    "wiper",
+    "scraper",
+    "gripper"
 ]
 
 materials = [
-    'cleaning Solution',
-    'disinfectant',
-    'paint',
-    'filler'
+    "cleaning Solution",
+    "disinfectant",
+    "paint",
+    "filler"
 ]
 
 robot1 = {
-    'id': '1',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'pickUp',
-        'putDown',
-        'placeInTrashBag',
-        'spray',
-        'wipeSurface',
-        'smoothSurface',
+    "id": 1,
+    "actions": [
+        "pickUp",
+        "putDown",
+        "placeInTrashBag",
+        "spray",
+        "wipeSurface",
+        "smoothSurface",
     ],
-    'equipments': [
-        'sprayGun',
-        'brush',
-        'wiper',
-        'scraper',
-        'gripper'
+    "equipments": [
+        "sprayGun",
+        "brush",
+        "wiper",
+        "scraper",
+        "gripper"
     ],
-    'materials': [
-        'cleaning Solution',
-        'disinfectant',
-        'paint',
-        'filler'
+    "materials": [
+        "cleaning Solution",
+        "disinfectant",
+        "paint",
+        "filler"
     ],
-    'size': {'width': 700, 'height': 1500},  # Small size
-    'max_reach_height': 2000  # Can reach up to 2 meters
+    "size": {"width": 700, "height": 1500},  # Small size
+    "max_reach_height": 2000  # Can reach up to 2 meters
 }
 
 robot2 = {
-    'id': '2',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'pickUp',
-        'putDown',
-        'placeInTrashBag',
-        'spray',
-        'wipeSurface',
-        'smoothSurface',
+    "id": 2,
+    "actions": [
+        "pickUp",
+        "putDown",
+        "placeInTrashBag",
+        "spray",
+        "wipeSurface",
+        "smoothSurface",
     ],
-    'equipments': [
-        'sprayGun',
-        'brush',
-        'wiper',
-        'scraper',
-        'gripper'
+    "equipments": [
+        "sprayGun",
+        "brush",
+        "wiper",
+        "scraper",
+        "gripper"
     ],
-    'materials': [
-        'cleaning Solution',
-        'disinfectant',
-        'paint',
-        'filler'
+    "materials": [
+        "cleaning Solution",
+        "disinfectant",
+        "paint",
+        "filler"
     ],
-    'size': {'width': 850, 'height': 1700},  # Medium size
-    'max_reach_height': 3000  # Can reach up to 3 meters
+    "size": {"width": 850, "height": 1700},  # Medium size
+    "max_reach_height": 3000  # Can reach up to 3 meters
 }
 
 
 robot3 = {
-    'id': '3',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'pickUp',
-        'putDown',
-        'placeInTrashBag',
-        'spray',
-        'wipeSurface',
-        'smoothSurface',
+    "id": 3,
+    "actions": [
+        "pickUp",
+        "putDown",
+        "placeInTrashBag",
+        "spray",
+        "wipeSurface",
+        "smoothSurface",
     ],
-    'equipments': [
-        'sprayGun',
-        'brush',
-        'wiper',
-        'scraper',
-        'gripper'
+    "equipments": [
+        "sprayGun",
+        "brush",
+        "wiper",
+        "scraper",
+        "gripper"
     ],
-    'materials': [
-        'cleaning Solution',
-        'disinfectant',
-        'paint',
-        'filler'
+    "materials": [
+        "cleaning Solution",
+        "disinfectant",
+        "paint",
+        "filler"
     ],
-    'size': {'width': 1600, 'height': 2000},  # Large size
-    'max_reach_height': 3700  # Can reach up to ceiling height
+    "size": {"width": 1600, "height": 2000},  # Large size
+    "max_reach_height": 3700  # Can reach up to ceiling height
 }
 
 
 robot4 = {
-    'id': '4',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'pickUp',
-        'putDown',
-        'placeInTrashBag',
-        'spray',
-        'wipeSurface',
-        'smoothSurface',
+    "id": 4,
+    "actions": [
+        "pickUp",
+        "putDown",
+        "placeInTrashBag",
+        "spray",
+        "wipeSurface",
+        "smoothSurface",
     ],
-    'equipments': [
-        'sprayGun',
-        'brush',
-        'wiper',
-        'scraper',
-        'gripper'
+    "equipments": [
+        "sprayGun",
+        "brush",
+        "wiper",
+        "scraper",
+        "gripper"
     ],
-    'materials': [
-        'cleaning Solution',
-        'disinfectant',
-        'paint',
-        'filler'
+    "materials": [
+        "cleaning Solution",
+        "disinfectant",
+        "paint",
+        "filler"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 2000  # Limited reach
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 2000  # Limited reach
 }
 
 robot5 = {
-    'id': '5',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'pickUp',
-        'putDown',
-        'placeInTrashBag',
-        'spray',
-        'wipeSurface',
-        'smoothSurface',
+    "id": 5,
+    "actions": [
+        "pickUp",
+        "putDown",
+        "placeInTrashBag",
+        "spray",
+        "wipeSurface",
+        "smoothSurface",
     ],
-    'equipments': [
-        'sprayGun',
-        'brush',
-        'wiper',
-        'scraper',
-        'gripper'
+    "equipments": [
+        "sprayGun",
+        "brush",
+        "wiper",
+        "scraper",
+        "gripper"
     ],
-    'materials': [
-        'cleaning Solution',
-        'disinfectant',
-        'paint',
-        'filler'
+    "materials": [
+        "cleaning Solution",
+        "disinfectant",
+        "paint",
+        "filler"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 3700  # Maximum reach
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 3700  # Maximum reach
 }
 
 
 robot6 = {
-    'id': '6',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'wipeSurface'
+    "id": 6,
+    "actions": [
+        "wipeSurface"
     ],
-    'equipments': [
-        'wiper'
+    "equipments": [
+        "wiper"
     ],
-    'materials': [
-        'cleaning Solution'
+    "materials": [
+        "cleaning Solution"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 3700  # Can reach windows up to ceiling height
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 3700  # Can reach windows up to ceiling height
 }
 
 
 robot7 = {
-    'id': '7',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'spray',
-        'wipeSurface'
+    "id": 7,
+    "actions": [
+        "spray",
+        "wipeSurface"
     ],
-    'equipments': [
-        'sprayGun',
-        'wiper'
+    "equipments": [
+        "sprayGun",
+        "wiper"
     ],
-    'materials': [
-        'disinfectant'
+    "materials": [
+        "disinfectant"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 2000  # Door handles are typically within 1m - 1.5m
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 2000  # Door handles are typically within 1m - 1.5m
 }
 
 robot8 = {
-    'id': '8',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'spray'
+    "id": 8,
+    "actions": [
+        "spray"
     ],
-    'equipments': [
-        'sprayGun'
+    "equipments": [
+        "sprayGun"
     ],
-    'materials': [
-        'paint'
+    "materials": [
+        "paint"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 3700  # Can paint walls up to ceiling height
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 3700  # Can paint walls up to ceiling height
 }
 
 
 robot9 = {
-    'id': '9',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'smoothSurface'
+    "id": 9,
+    "actions": [
+        "smoothSurface"
     ],
-    'equipments': [
-        'scraper',
-        'brush'
+    "equipments": [
+        "scraper",
+        "brush"
     ],
-    'materials': [
-        'filler'
+    "materials": [
+        "filler"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 3700  # Can reach cracks at any height
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 3700  # Can reach cracks at any height
 }
 
 robot10 = {
-    'id': '10',
-    'actions': [
-        'navigateTo',
-        'scan',
-        'pickUp',
-        'putDown',
-        'placeInTrashBag'
+    "id": 10,
+    "actions": [
+        "pickUp",
+        "putDown",
+        "placeInTrashBag"
     ],
-    'equipments': [
-        'gripper'
+    "equipments": [
+        "gripper"
     ],
-    'size': {'width': 700, 'height': 1600},  # Fits all doors
-    'max_reach_height': 2000  # Sufficient for ground-level trash collection
+    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "max_reach_height": 2000  # Sufficient for ground-level trash collection
 }
 
 robots_withoutConfig = {
@@ -279,15 +257,4 @@ robots = [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9
 robot_storage_id = 1
 
 
-def get_robot_info_by_id(robot_ids):
-    selected_robots = [robot for robot in robots if robot['id'] in robot_ids]
 
-    result = {
-        "robot_configs": {
-            "actions": actions,
-            "equipments": equipments,
-            "materials": materials,
-        },
-        "robots": selected_robots
-    }
-    return result

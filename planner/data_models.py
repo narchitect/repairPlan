@@ -3,23 +3,24 @@ from typing import List, Dict, Any
 from pydantic import BaseModel
 from typing import Union
 
-@dataclass
-class Door(BaseModel):
-    door_id: int
 
-@dataclass
-class Room(BaseModel):
-    room_id: int
-@dataclass
+
 class ScanningInfo(BaseModel):
-    position: Dict[str, float]
-    direction: Dict[str, float]
-@dataclass
+    position: List[float]
+    direction: List[float]
+
+class Reason(BaseModel):
+    int_reason: str
+    nav_reason: str
+    scan_reason: str
+    act_reason: str
+
 class TaskData(BaseModel):
     user_description: str
     defect_id: int
     robot_id: int
-    room_id: int
-    navigation_path: List[Union[Door, Room]]
+    room_info: str
+    navigation_path: List[int]
     scanning_info: ScanningInfo
     robotTasks: List[str]
+    reasons: Reason

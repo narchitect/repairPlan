@@ -1,13 +1,12 @@
 import json
-
-
+from data.robots import actions, equipments, materials, robots
 def load_scene_graph(file_path):
     with open(file_path, 'r') as f:
         scene_graph = json.load(f)
     return scene_graph
 
 
-def get_node_by_id(node_id: int, scene_graph) -> str:
+def get_node_info(node_id: int, scene_graph) -> str:
     full_graph = scene_graph
 
     # flatten
@@ -22,3 +21,63 @@ def get_node_by_id(node_id: int, scene_graph) -> str:
     # convert the result to a string
     result_dict = result if result else {"error": f"Node {node_id} not found"}
     return json.dumps(result_dict)
+
+def get_rooms_info(node_id, scene_graph):
+
+    # Build lookup dictionaries for quick access
+    id_to_node = {
+        'spaces': {node['id']: node for node in scene_graph.get('spaces', [])},
+        'elements': {node['id']: node for node in scene_graph.get('elements', [])},
+        'components': {node['id']: node for node in scene_graph.get('components', [])}
+    }
+
+    # Initialize result lists
+    associated_spaces = []
+    associated_nodes = []
+
+    # Find the input node in 'elements' or 'components'
+    node = id_to_node['elements'].get(node_id) or id_to_node['components'].get(node_id)
+    if not node:
+        return json.dumps({'error': f'Node ID {node_id} not found in elements or components.'})
+
+    # Get room IDs associated with the node
+    room_value = node.get('room', '')
+    room_ids = [rid.strip() for rid in room_value.split(',') if rid.strip()]
+
+    # Retrieve associated space nodes
+    for rid in room_ids:
+        space_node = id_to_node['spaces'].get(rid)
+        if space_node:
+            associated_spaces.append(space_node)
+
+    # Collect all nodes that have the same room IDs
+    for category in ['elements', 'components']:
+        for n in scene_graph.get(category, []):
+            n_room_value = n.get('room', '')
+            n_room_ids = [rid.strip() for rid in n_room_value.split(',') if rid.strip()]
+            if set(room_ids) & set(n_room_ids):
+                associated_nodes.append(n)
+
+    # Prepare the result
+    result = {
+        "defect_node": node,
+        "associated_spaces": associated_spaces,
+        "associated_elements": associated_nodes
+    }
+
+    return json.dumps(result)
+
+
+def get_robot_info_by_id(robot_id):
+    selected_robot = next((robot for robot in robots if robot['id'] == robot_id), None)
+
+    result = {
+        "robot_configs": {
+            "actions": actions,
+            "equipments": equipments,
+            "materials": materials,
+        },
+        "robots": selected_robot
+    }
+    return json.dumps(result)
+

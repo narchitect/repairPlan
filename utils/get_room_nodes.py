@@ -1,8 +1,6 @@
 import json
 
-def get_associated_nodes(node_id):
-
-    scene_graph = json.load(open('../data/sceneGraphs/3dsg_withCOR.json', 'r'))
+def get_associated_nodes(node_id, scene_graph):
 
     # Build lookup dictionaries for quick access
     id_to_node = {

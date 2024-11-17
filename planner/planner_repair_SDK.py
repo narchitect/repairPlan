@@ -9,11 +9,10 @@ client = OpenAI(api_key='sk-proj-Bo4LRMgQ-NLpoK4GbxdNUDtWJnjSlYjrINFedqAzEkuaoOE
 
 # 출력 스키마 정의
 class RepairPlan(BaseModel):
-    selected_robot_id: int
     action_sequence: List[str]
     reasoning: str
 
-def plan_robot_task(user_info, robot_info, env_info):
+def get_repair_plan(user_info, robot_info, env_info):
     # 프롬프트 생성
     prompt = f"""
         You are an expert in robot task planning for building maintenance.
@@ -31,26 +30,15 @@ def plan_robot_task(user_info, robot_info, env_info):
 
         Important:
         - the robot is a one-arm robot, it must "load" only one equipment at once before doing a task and must "unload" before loading another one. 
-        - The robot's actions are defined with parameters, e.g., 'navigateTo<object>'.
+        - The robot's actions are defined with parameters, e.g., 'spray<object>'.
         - Use appropriate parameters enclosed in '<>', where '<object>' is the node ID from the 3D scene graph.
         - Ensure that the action sequence uses node IDs from the environment data.
         - Consider the relationship between actions and the equipment loaded.
         - At the end of the task, the robot should unload all equipment.
 
         Your tasks are:
-        1. Select the most efficient and detailed robot from the robot library to repair the defect described.
-        2. Generate a detailed action sequence for the selected robot to perform the repair, based on its capabilities and the provided environment information.
-        3. Include parameters in the actions as defined in the robot's action list, using node IDs from the 3D scene graph.
-
-        Please output your answer in JSON format as:
-        {{
-            "selected_robot_id": "<robot_id>",
-            "action_sequence": [
-                "<First action>",
-                "<Second action>",
-                ...
-            ]
-        }}
+        1. Generate a detailed action sequence for the selected robot to perform the repair, based on its capabilities and the provided environment information.
+        2. Include parameters in the actions as defined in the robot's action list, using node IDs from the 3D scene graph.
         """
 
     # API 호출
@@ -65,8 +53,9 @@ def plan_robot_task(user_info, robot_info, env_info):
         max_tokens= 500,
     )
 
+    output = response.choices[0].message.parsed
     # 결과 반환
-    return response.choices[0].message.parsed
+    return output.action_sequence, output.reasoning
 
 # 함수 호출 예시
 # user_info = "there is a stain on the wall"
