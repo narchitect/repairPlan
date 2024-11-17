@@ -4,7 +4,7 @@ import json
 # Replace 'input.graphml' with the path to your GraphML file
 graphml_file = '/Users/nayunkim/Documents/GitHub/thesis/data/graphs/output_modifiedCOR/bim_room_graph.graphml'
 # Replace 'output.json' with the desired output JSON file name
-json_file = '../data/graphs/BIM_COR/graphml.json'
+json_file = '../data/graphs/BIM_COR/graphml_int.json'
 
 # Read the GraphML file
 G = nx.read_graphml(graphml_file)

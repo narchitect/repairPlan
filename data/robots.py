@@ -263,18 +263,20 @@ robot10 = {
 }
 
 robots_withoutConfig = {
-        "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
-    }
+        "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10],
+        "robot_storage_room_id": 1
+}
 robots_withConfig = {
         "robot_configs": {
             "actions": actions,
             "equipments": equipments,
             "materials": materials,
         },
-        "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
+        "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10],
     }
 
 robots = [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
+robot_storage_id = 1
 
 
 def get_robot_info_by_id(robot_ids):
