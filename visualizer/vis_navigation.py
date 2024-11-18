@@ -3,7 +3,7 @@ import networkx as nx
 import matplotlib.image as mpimg
 from utils.loader import load_scene_graph
 
-def overlay_navigation_path(path, data, image_path, output_path):
+def visualize_navigation(path, data, image_path, output_path):
     # 배경 이미지 로드
     img = mpimg.imread(image_path)  # 렌더링된 이미지 파일 경로 입력
 
@@ -86,4 +86,4 @@ def overlay_navigation_path(path, data, image_path, output_path):
     plt.show()
 
 # 함수 사용 예시
-overlay_navigation_path(["332","14", "330", "22", "328", "320"], load_scene_graph("../data/sceneGraphs/3dsg_withCOR.json"), '../data/image/top_view.png', "navigation_path_overlay2.png")
+# overlay_navigation_path(["332","14", "330", "22", "328", "320"], load_scene_graph("../data/sceneGraphs/3dsg_withCOR.json"), '../data/image/top_view.png', "navigation_path_overlay2.png")

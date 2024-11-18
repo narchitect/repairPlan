@@ -2,7 +2,7 @@ from planner.planner_navigation import get_inspectionPlan
 from planner.planner_scanning import find_optimal_location
 from planner.planner_repair import plan_robot_task
 from utils.get_room_nodes import get_associated_nodes
-from visualizer.vis_optimalLocation import visualize_scanPosition
+from visualizer.vis_scanning import visualize_scanPosition
 from visualizer.vis_navigation import overlay_navigation_path
 from data.robots import get_robot_info_by_id
 def get_repair_plan (user_description, scene_graph, robot_library, robot_location, camera_fov):

@@ -6,7 +6,7 @@ def load_scene_graph(file_path):
         scene_graph = json.load(f)
     return scene_graph
 
-# Global scene graph 
+# Global full scene graph 
 SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/3dsg_withCOR_int.json"
 GLOBAL_SCENE_GRAPH = load_scene_graph(SCENE_GRAPH_PATH)
 

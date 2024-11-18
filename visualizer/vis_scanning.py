@@ -1,7 +1,10 @@
 import plotly.graph_objects as go
 import numpy as np
+from utils.loader import get_rooms_info
 
-def visualize_scanPosition(env_data, camera_fov, camera_location, camera_direction):
+
+def visualize_scanning(defect_id, camera_fov, camera_location, camera_direction):
+    env_data = get_rooms_info(defect_id)
     # 시야각(FOV) 정의
     fov = camera_fov
 
@@ -52,7 +55,8 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
             x_vals, y_vals, z_vals = [v[0] for v in vertices], [v[1] for v in vertices], [v[2] for v in vertices]
             i, j, k = zip(*faces)
 
-            color = 'red' if elem_id == env_data['defect_node']['id'] else ('lightblue' if elem_type == 'Wall' else 'lightgreen')
+            color = 'red' if elem_id == env_data['defect_node']['id'] else (
+                'lightblue' if elem_type == 'Wall' else 'lightgreen')
 
             fig.add_trace(go.Mesh3d(x=x_vals, y=y_vals, z=z_vals, i=i, j=j, k=k,
                                     color=color, opacity=0.5, flatshading=True, hoverinfo='skip'))
@@ -97,7 +101,9 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
     x_cone, y_cone, z_cone = create_cone(camera_position, optimal_camera_direction, fov, cone_height)
 
     i, j, k = [0] * (len(x_cone) - 2), list(range(1, len(x_cone) - 1)), list(range(2, len(x_cone)))
-    i.append(0); j.append(len(x_cone) - 1); k.append(1)
+    i.append(0);
+    j.append(len(x_cone) - 1);
+    k.append(1)
 
     fig.add_trace(go.Mesh3d(x=x_cone, y=y_cone, z=z_cone, i=i, j=j, k=k,
                             opacity=0.2, color='yellow', name='Field of View'))
@@ -108,8 +114,8 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
             xaxis=dict(title='X', visible=True),
             yaxis=dict(title='Y', visible=True),
             zaxis=dict(title='Z', visible=True),
-            aspectmode='manual',
-            aspectratio=dict(x=1, y=1, z=1),  # 모든 축의 비율을 동일하게 설정하여 왜곡 제거
+            aspectmode='data',
+            aspectratio=dict(x=1, y=1, z=1),  
         ),
         title='Visualization on the optimal scanning position and direction',
         width=1200,
@@ -119,40 +125,39 @@ def visualize_scanPosition(env_data, camera_fov, camera_location, camera_directi
     # 그래프 표시
     fig.show()
 
-
-# 함수 호출 예시
-gpt4o1_env  = {
-    'defect_node': {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
-                    'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
-                    'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
-    'associated_spaces': [
-        {'id': '330', 'ifc_guid': '0x8tDwgKz4rBhuBSTQ03Vo', 'type': 'Space',
-         'location': {'x': -5.15925, 'y': -33.5286, 'z': 7.85},
-         'size': {'x': 9.799, 'y': 7.86, 'z': 3.7}}
-    ],
-    'associated_elements': [
-        {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
-         'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
-         'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
-        {'id': '474', 'ifc_guid': '1T7BPQ_hn69uk5$Jp8cv99', 'type': 'Ceiling',
-         'location': {'x': -5.15925, 'y': -33.5286, 'z': 3.7},
-         'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
-        {'id': '707', 'ifc_guid': '0a$DTcOc10$eWx3Py5JFns', 'type': 'Floor',
-         'location': {'x': -5.15925, 'y': -33.5286, 'z': 0.0},
-         'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
-        {'id': '779', 'ifc_guid': '26kn7MqLL9oOOTivXpgCJg', 'type': 'Wall',
-         'location': {'x': -5.15925, 'y': -29.5986, 'z': 1.85},
-         'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
-        {'id': '792', 'ifc_guid': '1XD1GHfzD6cunMzxtqLi4o', 'type': 'Wall',
-         'location': {'x': -10.0585, 'y': -33.5286, 'z': 1.85},
-         'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
-        {'id': '818', 'ifc_guid': '26kn7MqLL9oOOTivXpgDiH,26kn7MqLL9oOOTivXpgDiH', 'type': 'Wall',
-         'location': {'x': -5.15925, 'y': -37.4586, 'z': 1.85},
-         'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
-    ]
-}
-
-
-gpt4o_answer = [-2.11, -33.5286, 1.85]
-gpt4o1_answer = [-4.605, -33.5286,  1.85]
-visualize_scanPosition(gpt4o1_env, camera_fov=90, camera_location=gpt4o1_answer, camera_direction=[1, 0, 0])
+# # 함수 호출 예시
+# gpt4o1_env  = {
+#     'defect_node': {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
+#                     'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
+#                     'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+#     'associated_spaces': [
+#         {'id': '330', 'ifc_guid': '0x8tDwgKz4rBhuBSTQ03Vo', 'type': 'Space',
+#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 7.85},
+#          'size': {'x': 9.799, 'y': 7.86, 'z': 3.7}}
+#     ],
+#     'associated_elements': [
+#         {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
+#          'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
+#          'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+#         {'id': '474', 'ifc_guid': '1T7BPQ_hn69uk5$Jp8cv99', 'type': 'Ceiling',
+#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 3.7},
+#          'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
+#         {'id': '707', 'ifc_guid': '0a$DTcOc10$eWx3Py5JFns', 'type': 'Floor',
+#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 0.0},
+#          'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
+#         {'id': '779', 'ifc_guid': '26kn7MqLL9oOOTivXpgCJg', 'type': 'Wall',
+#          'location': {'x': -5.15925, 'y': -29.5986, 'z': 1.85},
+#          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
+#         {'id': '792', 'ifc_guid': '1XD1GHfzD6cunMzxtqLi4o', 'type': 'Wall',
+#          'location': {'x': -10.0585, 'y': -33.5286, 'z': 1.85},
+#          'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+#         {'id': '818', 'ifc_guid': '26kn7MqLL9oOOTivXpgDiH,26kn7MqLL9oOOTivXpgDiH', 'type': 'Wall',
+#          'location': {'x': -5.15925, 'y': -37.4586, 'z': 1.85},
+#          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
+#     ]
+# }
+#
+#
+# gpt4o_answer = [-2.11, -33.5286, 1.85]
+# gpt4o1_answer = [-4.605, -33.5286,  1.85]
+# visualize_scanning(396, camera_fov=90, camera_location=gpt4o_answer, camera_direction=[1, 0, 0])

@@ -1,11 +1,12 @@
 from data.robots import robots_withConfig
-from utils.loader import load_scene_graph, get_node_info, get_rooms_info, get_robot_info_by_id
+from utils.loader import load_scene_graph, get_robot_info_by_id
 from planner.planner_initialPlanner import get_initialPlan
 from planner.planner_navigation_SDK2 import get_navigationPath
 from planner.data_models import TaskData, ScanningInfo, Reason
 from planner.planner_scanning_SDK import get_scanning_plan
 from planner.planner_repair_SDK import get_repair_plan
-import json
+from visualizer.vis_navigation import visualize_navigation
+from visualizer.vis_scanning import visualize_scanning  
 
 def main():
     #prepare inputs
@@ -52,6 +53,11 @@ def main():
     )
 
     print(final_plan)
+
+    camera_fov = get_robot_info_by_id(robot_id)["robots"]["camera"]["FOV"]
+
+    visualize_navigation(path, scene_graph, "./data/image/top_view.png", "./data/image/nav_test1.png")
+    visualize_scanning(defect_id, camera_fov, position, direction)
 
 if __name__ == "__main__":
     main()
