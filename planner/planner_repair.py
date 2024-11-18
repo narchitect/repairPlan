@@ -1,69 +1,100 @@
 import json
 from openai import OpenAI
-import re
+from pydantic import BaseModel, Field
+from typing import List
+from data.robots import robots
+from utils.loader import get_rooms_info, get_robot_info_by_id
 
+#initialize OpenAI client
 client = OpenAI(api_key='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')
 
-def plan_robot_task(user_info, robot_info, env_info):
+# Output schema
+class RepairPlan(BaseModel):
+    action_sequence: List[str]
+    reasoning: str
+
+def get_repair_plan(user_info, defect_id, robot_id):
+    room_info = get_rooms_info(defect_id)
+    robot_info = get_robot_info_by_id(robot_id)
 
     prompt = f"""
-    You are an expert in robot task planning for building maintenance.
+        You are a highly skilled expert in robotic task planning specifically for building maintenance.
 
-    Given the following information:
+        Please consider the following detailed information:
 
-    User Defect Description:
-    {user_info}
+        User Defect Description:
+        {user_info}
 
-    Robot Library:
-    {json.dumps(robot_info, indent=2)}
+        Robot Specifications:
+        {json.dumps(robot_info, indent=2)}
 
-    Environment Information:
-    {json.dumps(env_info, indent=2)}
+        Environmental Context:
+        {json.dumps(room_info, indent=2)}
 
-    Important:
-    - The robot's actions are defined with parameters, e.g., 'navigateTo<object>'.
-    - Use appropriate parameters enclosed in '<>', where '<object>' is the node ID from the 3D scene graph.
-    - Ensure that the action sequence uses node IDs from the environment data.
-    - Consider the relationship between actions and the equipment loaded.
-    - The robot is a one-arm robot; it can only load one equipment at a time.
-    - The robot must unload equipment before loading another equipment.
-    - At the end of the task, the robot should unload all equipment.
+        Key Considerations:
+        - The robot is equipped with a single arm and can "load" only one piece of equipment at a time. It must "unload" before loading another.
+        - Actions for the robot are parameterized, such as 'spray<object>', where '<object>' is the node ID from the 3D scene graph.
+        - Ensure that the action sequence strictly uses node IDs from the provided environmental data.
+        - Carefully consider the relationship between each action and the equipment loaded.
+        - At the conclusion of the task, ensure the robot unloads all equipment.
 
-    Your tasks are:
-    1. Select the most efficient robot from the robot library to repair the defect described.
-    2. Generate a detailed action sequence for the selected robot to perform the repair, based on its capabilities and the provided environment information.
-    3. Include parameters in the actions as defined in the robot's action list, using node IDs from the 3D scene graph.
+        Your objectives are:
+        1. Develop a comprehensive and precise action sequence for the selected robot to execute the repair, leveraging its capabilities and the environmental context provided.
+        2. Integrate parameters into the actions as specified in the robot's action list, utilizing node IDs from the 3D scene graph.
+        """
 
-    Please output your answer in JSON format as:
-    {{
-        "selected_robot_id": "<robot_id>",
-        "action_sequence": [
-            "<First action>",
-            "<Second action>",
-            ...
-        ]
-    }}
-    """
-
-    response = client.chat.completions.create(
-        model="chatgpt-4o-latest",
+    # API call
+    response = client.beta.chat.completions.parse(
+        model="gpt-4o",  # Use a model that supports structured outputs
         messages=[
             {"role": "system", "content": "You are an assistant that helps with robot action planning."},
             {"role": "user", "content": prompt}
         ],
-        max_tokens=500,
+        response_format=RepairPlan,  # Use Pydantic model to define output schema
         temperature=0,
+        max_tokens= 500,
     )
 
-    full_response = response.choices[0].message.content
-    json_match = re.search(r'```json\n(.*?)\n```', full_response, re.DOTALL)
-    if json_match:
-        json_output = json_match.group(1)
-        try:
-            json_output = json.loads(json_output)
-        except json.JSONDecodeError:
-            print("JSON 디코딩 오류가 발생했습니다.")
-    else:
-        print("JSON 출력 부분을 찾을 수 없습니다.")
-    return json_output
+    output = response.choices[0].message.parsed
+    # Return the result
+    return output.action_sequence, output.reasoning
 
+# Example function call
+# user_info = "there is a stain on the wall"
+# robot_info = robots
+# data = {
+#     'defect_node': {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
+#                     'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
+#                     'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+#     'associated_spaces': [
+#         {'id': '330', 'ifc_guid': '0x8tDwgKz4rBhuBSTQ03Vo', 'type': 'Space',
+#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 7.85},
+#          'size': {'x': 9.799, 'y': 7.86, 'z': 3.7}}
+#     ],
+#     'associated_elements': [
+#         {'id': '396', 'ifc_guid': '26kn7MqLL9oOOTivXpgDH8', 'type': 'Wall',
+#          'location': {'x': -0.26, 'y': -33.5286, 'z': 1.85},
+#          'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+#         {'id': '474', 'ifc_guid': '1T7BPQ_hn69uk5$Jp8cv99', 'type': 'Ceiling',
+#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 3.7},
+#          'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
+#         {'id': '707', 'ifc_guid': '0a$DTcOc10$eWx3Py5JFns', 'type': 'Floor',
+#          'location': {'x': -5.15925, 'y': -33.5286, 'z': 0.0},
+#          'size': {'x': 9.799, 'y': 7.86, 'z': 0.0}, 'room': '330'},
+#         {'id': '779', 'ifc_guid': '26kn7MqLL9oOOTivXpgCJg', 'type': 'Wall',
+#          'location': {'x': -5.15925, 'y': -29.5986, 'z': 1.85},
+#          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
+#         {'id': '792', 'ifc_guid': '1XD1GHfzD6cunMzxtqLi4o', 'type': 'Wall',
+#          'location': {'x': -10.0585, 'y': -33.5286, 'z': 1.85},
+#          'size': {'x': 0.0, 'y': 7.86, 'z': 3.7}, 'room': '330'},
+#         {'id': '818', 'ifc_guid': '26kn7MqLL9oOOTivXpgDiH,26kn7MqLL9oOOTivXpgDiH', 'type': 'Wall',
+#          'location': {'x': -5.15925, 'y': -37.4586, 'z': 1.85},
+#          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
+#     ]
+# }
+#
+#
+# result = plan_robot_task(user_info, robot_info, data)
+# # print(result)
+#
+# print(result.selected_robot_id)

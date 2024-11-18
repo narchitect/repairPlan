@@ -1,10 +1,10 @@
 from data.robots import robots_withConfig
 from utils.loader import load_scene_graph, get_robot_info_by_id
 from planner.planner_initialPlanner import get_initialPlan
-from planner.planner_navigation_SDK2 import get_navigationPath
+from planner.planner_navigation import get_navigationPath
 from planner.data_models import TaskData, ScanningInfo, Reason
-from planner.planner_scanning_SDK import get_scanning_plan
-from planner.planner_repair_SDK import get_repair_plan
+from planner.planner_scanning import get_scanning_plan
+from planner.planner_repair import get_repair_plan
 from visualizer.vis_navigation import visualize_navigation
 from visualizer.vis_scanning import visualize_scanning  
 

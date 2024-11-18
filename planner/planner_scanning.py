@@ -1,64 +1,57 @@
 from openai import OpenAI
+from pydantic import BaseModel, Field
+from typing import List, Dict
+from utils.loader import get_rooms_info, get_robot_info_by_id
 import json
-import re
 
 # Set your OpenAI API key
 client = OpenAI(
     api_key='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')
 
 
+class ScanningPosition(BaseModel):
+    optimal_location: List[float] = Field(..., description="Optimal coordinates")
+    optimal_direction: List[float] = Field(..., description="Optimal direction as a vector")
+    reasoning: str = Field(..., description="Explanation for each step taken")
+
+
 # Function to find the optimal scanning location
-def find_optimal_location(env_data, camera_fov):
+def get_scanning_plan(defect_id, robot_id):
+    selected_robot_info = get_robot_info_by_id(robot_id)
+    camera_fov = selected_robot_info["robots"]["camera"]["FOV"]
+    env_data = get_rooms_info(defect_id)
+    
     system = """You are an assistant specializing in robot action planning and environment analysis. 
     Your task is to help determine the optimal scanning location for a robot to inspect defects within a building environment. 
     Consider factors such as the robot's field of view, environmental obstacles, and the defect's location when providing calculations and recommendations."""
 
-    # Prepare the prompt for OpenAI API
-    prompt = f"""
-    Given the environment data and a camera with {camera_fov} degrees Field of View (FOV), find the optimal camera location to scan the defect object and the optimal camera directino to scan the entire area of the defect.
+    prompt = f"""    
+    Given the following information:
+    Environment data: {env_data}
+    Camera degrees Field of View (FOV): {camera_fov}
 
-    Note: The "location" of each object represents the central point coordinate of that object.
-
-    Environment Data:
-    - Defect Node: {env_data['defect_node']}
-    - Associated Spaces: {env_data['associated_spaces']}
-    - Associated Elements: {env_data['associated_elements']}
-
-    Important
-    the location key in nodes are central coordinate of the object. 
+    Considering the given data, find the optimal camera location to scan the defect object and the optimal camera direction to scan the entire area of the defect.
 
     Please provide the reasoning steps as a chain of thought, include the formulas used, and finally output as:
     {{
-        "optimal_location" : {{"x": x_value, "y": y_value, "z": z_value}},
+        "optimal_location" : [x_coordinate, y_coordinate, z_coordinate],
         "optimal_direction": [ x_value, y_value, z_value ],
         "reasoning": "the reasons for each steps",
     }}
     """
 
     # Call the OpenAI API
-    response = client.chat.completions.create(
-        model="chatgpt-4o-latest",
+    response = client.beta.chat.completions.parse(
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": system},
             {"role": "user", "content": prompt}
         ],
-
-        max_tokens=500,
+        response_format=ScanningPosition,
+        max_tokens=1000,
         temperature=0,
     )
 
-    full_response = response.choices[0].message.content
-    json_match = re.search(r'```json\n(.*?)\n```', full_response, re.DOTALL)
-    if json_match:
-        json_output = json_match.group(1)
-        try:
-            json_output = json.loads(json_output)
-        except json.JSONDecodeError:
-            print("JSON 디코딩 오류가 발생했습니다.")
-    else:
-        print("JSON 출력 부분을 찾을 수 없습니다.")
+    output = response.choices[0].message.parsed
 
-    return json_output
-
-
-
+    return output.optimal_location, output.optimal_direction, output.reasoning
