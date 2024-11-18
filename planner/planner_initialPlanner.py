@@ -1,9 +1,8 @@
 from typing import Tuple, Any
-
 from openai import OpenAI
 from data_models import TaskData
 from pydantic import BaseModel
-
+from utils.loader import get_node_info
 client = OpenAI(
     api_key='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')
 
@@ -51,4 +50,5 @@ def get_initialPlan(user_input, robot_db, scene_graph) -> tuple[int, int, str]:
     )
 
     output = response.choices[0].message.parsed
-    return output.defect_id, output.robot_id, output.reasoning
+    room_id = get_node_info(output.defect_id)["room"]
+    return output.defect_id, output.robot_id, room_id, output.reasoning

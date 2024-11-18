@@ -1,8 +1,8 @@
 from openai import OpenAI
-import json
-import re
 from pydantic import BaseModel, Field
 from typing import List, Dict
+from utils.loader import get_rooms_info, get_robot_info_by_id
+import json
 
 # Set your OpenAI API key
 client = OpenAI(
@@ -16,7 +16,11 @@ class ScanningPosition(BaseModel):
 
 
 # Function to find the optimal scanning location
-def get_scanning_plan(env_data, camera_fov):
+def get_scanning_plan(defect_id, robot_id):
+    selected_robot_info = get_robot_info_by_id(robot_id)
+    camera_fov = selected_robot_info["robots"]["camera"]["FOV"]
+    env_data = get_rooms_info(defect_id)
+    
     system = """You are an assistant specializing in robot action planning and environment analysis. 
     Your task is to help determine the optimal scanning location for a robot to inspect defects within a building environment. 
     Consider factors such as the robot's field of view, environmental obstacles, and the defect's location when providing calculations and recommendations."""
@@ -26,7 +30,7 @@ def get_scanning_plan(env_data, camera_fov):
     Environment data: {env_data}
     Camera degrees Field of View (FOV): {camera_fov}
 
-    Consdiering the given data, find the optimal camera location to scan the defect object and the optimal camera direction to scan the entire area of the defect.
+    Considering the given data, find the optimal camera location to scan the defect object and the optimal camera direction to scan the entire area of the defect.
 
     Please provide the reasoning steps as a chain of thought, include the formulas used, and finally output as:
     {{

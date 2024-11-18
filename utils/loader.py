@@ -1,13 +1,17 @@
 import json
 from data.robots import actions, equipments, materials, robots
+
 def load_scene_graph(file_path):
     with open(file_path, 'r') as f:
         scene_graph = json.load(f)
     return scene_graph
 
+# Global scene graph 
+SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/3dsg_withCOR_int.json"
+GLOBAL_SCENE_GRAPH = load_scene_graph(SCENE_GRAPH_PATH)
 
-def get_node_info(node_id: int, scene_graph) -> str:
-    full_graph = scene_graph
+def get_node_info(node_id: int) -> str:
+    full_graph = GLOBAL_SCENE_GRAPH
 
     # flatten
     all_nodes = [
@@ -20,10 +24,10 @@ def get_node_info(node_id: int, scene_graph) -> str:
 
     # convert the result to a string
     result_dict = result if result else {"error": f"Node {node_id} not found"}
-    return json.dumps(result_dict)
+    return result_dict
 
-def get_rooms_info(node_id, scene_graph):
-
+def get_rooms_info(node_id):
+    scene_graph = GLOBAL_SCENE_GRAPH
     # Build lookup dictionaries for quick access
     id_to_node = {
         'spaces': {node['id']: node for node in scene_graph.get('spaces', [])},
@@ -65,7 +69,7 @@ def get_rooms_info(node_id, scene_graph):
         "associated_elements": associated_nodes
     }
 
-    return json.dumps(result)
+    return result
 
 
 def get_robot_info_by_id(robot_id):
@@ -79,5 +83,5 @@ def get_robot_info_by_id(robot_id):
         },
         "robots": selected_robot
     }
-    return json.dumps(result)
+    return result
 

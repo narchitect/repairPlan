@@ -1,9 +1,8 @@
-import json
 from openai import OpenAI
-import re
 from pydantic import BaseModel, Field
-from typing import List, Union
-
+from typing import List
+from utils.loader import get_node_info
+import json
 client = OpenAI(
     api_key='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')
 
@@ -12,7 +11,8 @@ class NavigationPlan(BaseModel):
     reasoning: str = Field(..., description ='Step-by-step reasoning for the decisions')
 
 
-def get_navigationPath(defect_info, scene_graph, robots) -> tuple[List[int], str]:
+def get_navigationPath(defect_id: int, scene_graph, robots) -> tuple[List[int], str]:
+    defect_node = get_node_info(defect_id)
     prompt = f"""
         You are an expert in navigation planning with graph data.
 
@@ -37,7 +37,7 @@ def get_navigationPath(defect_info, scene_graph, robots) -> tuple[List[int], str
             },
             {
                 "role": "user",
-                "content": defect_info
+                "content": json.dumps(defect_node)
             }
         ],
         response_format=NavigationPlan,

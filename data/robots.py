@@ -47,7 +47,9 @@ robot1 = {
         "filler"
     ],
     "size": {"width": 700, "height": 1500},  # Small size
-    "max_reach_height": 2000  # Can reach up to 2 meters
+    "max_reach_height": 2000,
+    "camera": {"height": 1500, "FOV": 60}
+
 }
 
 robot2 = {
@@ -74,7 +76,8 @@ robot2 = {
         "filler"
     ],
     "size": {"width": 850, "height": 1700},  # Medium size
-    "max_reach_height": 3000  # Can reach up to 3 meters
+    "max_reach_height": 3000,  # Can reach up to 3 meters
+    "camera": {"height": 1500, "FOV": 60}
 }
 
 
@@ -102,7 +105,8 @@ robot3 = {
         "filler"
     ],
     "size": {"width": 1600, "height": 2000},  # Large size
-    "max_reach_height": 3700  # Can reach up to ceiling height
+    "max_reach_height": 3700,
+    "camera": {"height": 1200, "FOV": 70}  
 }
 
 
@@ -130,7 +134,8 @@ robot4 = {
         "filler"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 2000  # Limited reach
+    "max_reach_height": 2000,
+    "camera": {"height": 1600, "FOV": 80}
 }
 
 robot5 = {
@@ -157,7 +162,8 @@ robot5 = {
         "filler"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 3700  # Maximum reach
+    "max_reach_height": 3700,  # Maximum reach
+    "camera": {"height": 1800, "FOV": 90}
 }
 
 
@@ -173,7 +179,8 @@ robot6 = {
         "cleaning Solution"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 3700  # Can reach windows up to ceiling height
+    "max_reach_height": 3700,
+    "camera": {"height": 1700, "FOV": 60}  # Can reach windows up to ceiling height
 }
 
 
@@ -191,7 +198,8 @@ robot7 = {
         "disinfectant"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 2000  # Door handles are typically within 1m - 1.5m
+    "max_reach_height": 2000,
+    "camera": {"height": 1500, "FOV": 70}
 }
 
 robot8 = {
@@ -206,7 +214,8 @@ robot8 = {
         "paint"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 3700  # Can paint walls up to ceiling height
+    "max_reach_height": 3700,
+    "camera": {"height": 1700, "FOV": 80}  
 }
 
 
@@ -223,7 +232,8 @@ robot9 = {
         "filler"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 3700  # Can reach cracks at any height
+    "max_reach_height": 3700,  # Can reach cracks at any height
+    "camera": {"height": 1500, "FOV": 90}
 }
 
 robot10 = {
@@ -237,12 +247,15 @@ robot10 = {
         "gripper"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 2000  # Sufficient for ground-level trash collection
+    "max_reach_height": 2000,  # Sufficient for ground-level trash collection
+    "camera": {"height": 1300, "FOV": 90}
 }
 
 robots_withoutConfig = {
         "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10],
-        "robot_storage_room_id": 1
+        "robot_storage": {
+            "room_id": 1
+        }
 }
 robots_withConfig = {
         "robot_configs": {
@@ -250,11 +263,14 @@ robots_withConfig = {
             "equipments": equipments,
             "materials": materials,
         },
+        "robot_storage": {
+            "room_id": 1
+        },
         "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10],
     }
 
 robots = [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
-robot_storage_id = 1
+
 
 
 

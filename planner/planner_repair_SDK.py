@@ -3,61 +3,63 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 from typing import List
 from data.robots import robots
+from utils.loader import get_rooms_info, get_robot_info_by_id
 
-# OpenAI 클라이언트 초기화
+#initialize OpenAI client
 client = OpenAI(api_key='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')
 
-# 출력 스키마 정의
+# Output schema
 class RepairPlan(BaseModel):
     action_sequence: List[str]
     reasoning: str
 
-def get_repair_plan(user_info, robot_info, env_info):
-    # 프롬프트 생성
-    prompt = f"""
-        You are an expert in robot task planning for building maintenance.
+def get_repair_plan(user_info, defect_id, robot_id):
+    room_info = get_rooms_info(defect_id)
+    robot_info = get_robot_info_by_id(robot_id)
 
-        Given the following information:
+    prompt = f"""
+        You are a highly skilled expert in robotic task planning specifically for building maintenance.
+
+        Please consider the following detailed information:
 
         User Defect Description:
         {user_info}
 
-        Robot Library:
+        Robot Specifications:
         {json.dumps(robot_info, indent=2)}
 
-        Environment Information:
-        {json.dumps(env_info, indent=2)}
+        Environmental Context:
+        {json.dumps(room_info, indent=2)}
 
-        Important:
-        - the robot is a one-arm robot, it must "load" only one equipment at once before doing a task and must "unload" before loading another one. 
-        - The robot's actions are defined with parameters, e.g., 'spray<object>'.
-        - Use appropriate parameters enclosed in '<>', where '<object>' is the node ID from the 3D scene graph.
-        - Ensure that the action sequence uses node IDs from the environment data.
-        - Consider the relationship between actions and the equipment loaded.
-        - At the end of the task, the robot should unload all equipment.
+        Key Considerations:
+        - The robot is equipped with a single arm and can "load" only one piece of equipment at a time. It must "unload" before loading another.
+        - Actions for the robot are parameterized, such as 'spray<object>', where '<object>' is the node ID from the 3D scene graph.
+        - Ensure that the action sequence strictly uses node IDs from the provided environmental data.
+        - Carefully consider the relationship between each action and the equipment loaded.
+        - At the conclusion of the task, ensure the robot unloads all equipment.
 
-        Your tasks are:
-        1. Generate a detailed action sequence for the selected robot to perform the repair, based on its capabilities and the provided environment information.
-        2. Include parameters in the actions as defined in the robot's action list, using node IDs from the 3D scene graph.
+        Your objectives are:
+        1. Develop a comprehensive and precise action sequence for the selected robot to execute the repair, leveraging its capabilities and the environmental context provided.
+        2. Integrate parameters into the actions as specified in the robot's action list, utilizing node IDs from the 3D scene graph.
         """
 
-    # API 호출
+    # API call
     response = client.beta.chat.completions.parse(
-        model="gpt-4o",  # Structured Outputs를 지원하는 모델 사용
+        model="gpt-4o",  # Use a model that supports structured outputs
         messages=[
             {"role": "system", "content": "You are an assistant that helps with robot action planning."},
             {"role": "user", "content": prompt}
         ],
-        response_format=RepairPlan,  # Pydantic 모델을 사용하여 출력 스키마 정의
+        response_format=RepairPlan,  # Use Pydantic model to define output schema
         temperature=0,
         max_tokens= 500,
     )
 
     output = response.choices[0].message.parsed
-    # 결과 반환
+    # Return the result
     return output.action_sequence, output.reasoning
 
-# 함수 호출 예시
+# Example function call
 # user_info = "there is a stain on the wall"
 # robot_info = robots
 # data = {
