@@ -32,7 +32,7 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
 
     Final output:
     "defect_id": [defect_id as integer or null],
-    "reasoning": "Your reasoning here.",
+    "reasoning": "Your reasoning for indentifying defects.",
     "questions": "Your questions here (if any, if not, set it as None)."
     """
 
@@ -69,7 +69,7 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
             user_answers = input("Your answers: ")
 
             # Combine original user input with new answers
-            combined_input = f"{user_input}\nAdditional Information: {user_answers}"
+            combined_input = f"{user_input}\nAdditional Information: question:{output.questions} user_answer{user_answers}"
 
             # Retry identification with the new information
             return identify_defect_node(combined_input, scene_graph)

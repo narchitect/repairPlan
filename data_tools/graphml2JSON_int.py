@@ -4,7 +4,7 @@ import json
 # Replace 'input.graphml' with the path to your GraphML file
 graphml_file = '/Users/nayunkim/Documents/GitHub/thesis/data/graphs/output_modifiedCOR/bim_room_graph.graphml'
 # Replace 'output.json' with the desired output JSON file name
-json_file = '../data/graphs/BIM_COR/graphml_int.json'
+json_file = '../data/graphs/BIM_COR/graphml_int_link.json'
 
 # Read the GraphML file
 G = nx.read_graphml(graphml_file)
@@ -21,6 +21,10 @@ for node in data['nodes']:
         except ValueError:
             # Handle cases where the ID might not be convertible to integer
             print(f"Warning: Could not convert id '{node['id']}' to integer.")
+
+for link in data['links']:
+    link['source'] = int(link['source'])
+    link['target'] = int(link['target'])
 
 # Write the modified data to a JSON file
 with open(json_file, 'w') as f:
