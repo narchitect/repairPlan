@@ -156,8 +156,8 @@ def visualize_scanning(defect_id, camera_fov, camera_location, camera_direction)
 #          'size': {'x': 9.799, 'y': 0.0, 'z': 3.7}, 'room': '330'},
 #     ]
 # }
-#
-#
+
+
 # gpt4o_answer = [-2.11, -33.5286, 1.85]
 # gpt4o1_answer = [-4.605, -33.5286,  1.85]
-# visualize_scanning(396, camera_fov=90, camera_location=gpt4o_answer, camera_direction=[1, 0, 0])
+# visualize_scanning(gpt4o1_env, camera_fov=90, camera_location=gpt4o1_answer, camera_direction=[1, 0, 0])

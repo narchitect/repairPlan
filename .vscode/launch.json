@@ -10,9 +10,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "env": {
-                "PYTHONPATH": "/Users/nayunkim/Documents/GitHub/repairPlan"
-            }
+            "env": {"PYTHONPATH": "${workspaceFolder}"},
         }
     ]
 }

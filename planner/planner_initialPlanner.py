@@ -1,8 +1,10 @@
+from typing import Tuple, Any
+
 from openai import OpenAI
 from pydantic import BaseModel
 from utils.loader import get_node_info
-client = OpenAI(
-    api_key='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')
+client = OpenAI(api_key='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')
+
 
 
 class InitialPlan(BaseModel):
@@ -11,7 +13,7 @@ class InitialPlan(BaseModel):
     reasoning: str
 
 
-def get_initialPlan(user_input, robot_db, scene_graph) -> tuple[int, int, str]:
+def get_initialPlan(user_input, robot_db, scene_graph) -> tuple[Any, Any, str, Any]:
     prompt = f"""
         You are an excellent graph search agent and an expert in building repairs with in-depth knowledge robot capabilities.
 
@@ -31,7 +33,7 @@ def get_initialPlan(user_input, robot_db, scene_graph) -> tuple[int, int, str]:
         """
 
     response = client.beta.chat.completions.parse(
-        model="gpt-4o-mini",
+        model="chatgpt-4o-latest",
         messages=[
             {
                 "role": "system",
@@ -48,5 +50,8 @@ def get_initialPlan(user_input, robot_db, scene_graph) -> tuple[int, int, str]:
     )
 
     output = response.choices[0].message.parsed
-    room_id = get_node_info(output.defect_id)["room"]
+    if get_node_info(output.defect_id)['type'] == "element" or get_node_info(output.defect_id)['type'] == "component":
+        room_id = get_node_info(output.defect_id)["room"]
+    else:
+        room_id = None and print(f"Defect type is {get_node_info(output.defect_id)['type']}")
     return output.defect_id, output.robot_id, room_id, output.reasoning
