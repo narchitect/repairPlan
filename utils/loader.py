@@ -7,7 +7,7 @@ def load_scene_graph(file_path):
     return scene_graph
 
 # Global full scene graph 
-SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/3dsg_withCOR_int.json"
+SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full.json"
 GLOBAL_SCENE_GRAPH = load_scene_graph(SCENE_GRAPH_PATH)
 
 def get_node_info(node_id: int) -> str:
@@ -31,7 +31,7 @@ def get_rooms_info(node_id):
     # Build lookup dictionaries for quick access
     id_to_node = {
         'spaces': {node['id']: node for node in scene_graph.get('spaces', [])},
-        'elements': {node['id']: node for node in scene_graph.get('elements', [])},
+        'surfaces': {node['id']: node for node in scene_graph.get('surfaces', [])},
         'components': {node['id']: node for node in scene_graph.get('components', [])}
     }
 
@@ -40,9 +40,9 @@ def get_rooms_info(node_id):
     associated_nodes = []
 
     # Find the input node in 'elements' or 'components'
-    node = id_to_node['elements'].get(node_id) or id_to_node['components'].get(node_id)
+    node = id_to_node['surfaces'].get(node_id) or id_to_node['components'].get(node_id)
     if not node:
-        return json.dumps({'error': f'Node ID {node_id} not found in elements or components.'})
+        return json.dumps({'error': f'Node ID {node_id} not found in surfaces or components.'})
 
     # Get room IDs associated with the node
     room_value = node.get('room', '')
@@ -55,7 +55,7 @@ def get_rooms_info(node_id):
             associated_spaces.append(space_node)
 
     # Collect all nodes that have the same room IDs
-    for category in ['elements', 'components']:
+    for category in ['surfaces', 'components']:
         for n in scene_graph.get(category, []):
             n_room_value = n.get('room', '')
             n_room_ids = [rid.strip() for rid in n_room_value.split(',') if rid.strip()]
@@ -66,7 +66,7 @@ def get_rooms_info(node_id):
     result = {
         "defect_node": node,
         "associated_spaces": associated_spaces,
-        "associated_elements": associated_nodes
+        "associated_surfaces": associated_nodes
     }
 
     return result

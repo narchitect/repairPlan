@@ -3,7 +3,7 @@ import networkx as nx
 import matplotlib.image as mpimg
 from utils.loader import load_scene_graph
 
-def visualize_navigation(path, data, image_path, output_path):
+def visualize_navigation(path, defect_id, data, image_path, output_path):       
     # 배경 이미지 로드
     img = mpimg.imread(image_path)  # 렌더링된 이미지 파일 경로 입력
 
@@ -16,21 +16,22 @@ def visualize_navigation(path, data, image_path, output_path):
     scale_factor = 9.8  # 이미지와 그래프의 스케일을 맞추기 위한 비율 (필요시 조정)
 
     # 공간 노드 추가 및 위치 조정
-    for space in data['spaces']:
-        x, y = space['location']['x'], space['location']['y']
+    for space in data['nodes']['spaces']:
+        x, y, z= space['location']
         # 오프셋 및 스케일 조정
         adjusted_x = (x * scale_factor) + reference_point_img[0]
         adjusted_y = reference_point_img[1] - (y * scale_factor)  # y 값을 반전
         G.add_node(space['id'], pos=(adjusted_x, adjusted_y), node_type='Space')  # 조정된 위치로 노드 추가
 
     # 문과 창문을 그래프에 추가
-    for component in data['components']:
-        if component['type'] in ['Door', 'Window']:
-            x, y = component['location']['x'], component['location']['y']
+    for component in data['nodes']['components']:
+        if component['type'] in ['door', 'window']:
+            x, y, z= component['location']
             adjusted_x = (x * scale_factor) + reference_point_img[0]
             adjusted_y = reference_point_img[1] - (y * scale_factor)
             G.add_node(component['id'], pos=(adjusted_x, adjusted_y), node_type=component['type'])
-
+    
+    
     # 경로에 포함된 노드와 엣지를 순서대로 추가
     H = nx.DiGraph()  # 방향 그래프로 생성하여 화살표 순서를 명확히 함
 
@@ -43,6 +44,16 @@ def visualize_navigation(path, data, image_path, output_path):
         if i < len(path) - 1:
             # 순서에 맞게 엣지 추가
             H.add_edge(path[i], path[i + 1])
+
+    # 결함 노드 추가 및 위치 조정
+    for category in ['spaces', 'surfaces', 'components']:
+        for defect in data['nodes'][category]:
+            if defect['id'] == defect_id:
+                x, y, z = defect['location']
+                adjusted_x = (x * scale_factor) + reference_point_img[0]
+                adjusted_y = reference_point_img[1] - (y * scale_factor)
+                G.add_node(defect['id'], pos=(adjusted_x, adjusted_y), node_type='Defect')
+
 
     # 노드 위치와 타입 추출
     pos = nx.get_node_attributes(H, 'pos')
@@ -61,7 +72,8 @@ def visualize_navigation(path, data, image_path, output_path):
     node_colors = [
         'blue' if node_types[node] == 'Space' else
         'green' if node_types[node] == 'Door' else
-        'red' for node in H.nodes
+        'red' if node_types[node] == 'Window' else
+        'orange' if node_types[node] == 'Defect' else 'gray' for node in H.nodes  # 결함 노드는 주황색으로 설정
     ]
 
     # 경로에 포함된 그래프를 이미지 위에 오버레이

@@ -1,0 +1,75 @@
+{
+    "spaces": [
+        {
+            "id": 9,
+            "surfaces": [
+                1004,
+                1103,
+                3025,
+                1131,
+                2059,
+                1197
+            ]
+        }
+    ],
+    "surfaces": [
+        {
+            "id": 1004,
+            "type": "wall",
+            "components": [
+                4001,
+                4002
+            ]
+        },
+        {
+            "id": 1103,
+            "type": "wall",
+            "components": []
+        },
+        {
+            "id": 3025,
+            "type": "floor",
+            "components": [
+                5000,
+                5001
+            ]
+        },
+        {
+            "id": 1131,
+            "type": "wall",
+            "components": [
+                5000
+            ]
+        },
+        {
+            "id": 2059,
+            "type": "ceiling",
+            "components": []
+        },
+        {
+            "id": 1197,
+            "type": "wall",
+            "components": [
+                5001
+            ]
+        }
+    ],
+    "components": [
+        {
+            "id": 5000,
+            "type": "door"
+        },
+        {
+            "id": 5001,
+            "type": "door"
+        },
+        {
+            "id": 4001,
+            "type": "window"
+        },
+        {
+            "id": 4002,
+            "type": "window"
+        }
+    ]
+}

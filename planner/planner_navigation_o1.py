@@ -11,13 +11,14 @@ class NavigationPlan(BaseModel):
     reasoning: str = Field(..., description ='Step-by-step reasoning for the decisions')
 
 
-def get_navigationPath(defect_id: int, scene_graph) -> tuple[List[int], str]:
+def get_navigationPath_o1(defect_id: int, scene_graph) -> tuple[List[int], str]:
     defect_node = get_node_info(defect_id)
     prompt = f"""
         You are an expert in navigation planning with graph data.
 
         Given the following information:
         1. Building information in 3D Scene Graph: {scene_graph} 
+        2. Defect_node: {defect_node}
 
         Task:
         1. Plan possible and the most optimal path from robot's storage to the defect's location, which passes the least number of rooms and doors to the defect location.
@@ -28,25 +29,17 @@ def get_navigationPath(defect_id: int, scene_graph) -> tuple[List[int], str]:
         """
 
     response = client.beta.chat.completions.parse(
-        model="gpt-4o-mini",
+        model="o1-preview",
         messages=[
             {
-                "role": "system",
-                "content": prompt
-            },
-            {
                 "role": "user",
-                "content": json.dumps(defect_node)
+                "content": prompt
             }
         ],
-        response_format=NavigationPlan,
-        temperature=0,
-        max_tokens=1000,
     )
 
-    output = response.choices[0].message.parsed
+    output = response.choices[0].message.content
     print(output)
-
-    return output.path, output.reasoning
+    return output
 
 
