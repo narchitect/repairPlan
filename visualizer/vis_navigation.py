@@ -21,7 +21,7 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
         # 오프셋 및 스케일 조정
         adjusted_x = (x * scale_factor) + reference_point_img[0]
         adjusted_y = reference_point_img[1] - (y * scale_factor)  # y 값을 반전
-        G.add_node(space['id'], pos=(adjusted_x, adjusted_y), node_type='Space')  # 조정된 위치로 노드 추가
+        G.add_node(space['id'], pos=(adjusted_x, adjusted_y), node_type='space')  # 조정된 위치로 노드 추가
 
     # 문과 창문을 그래프에 추가
     for component in data['nodes']['components']:
@@ -52,8 +52,8 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
                 x, y, z = defect['location']
                 adjusted_x = (x * scale_factor) + reference_point_img[0]
                 adjusted_y = reference_point_img[1] - (y * scale_factor)
-                G.add_node(defect['id'], pos=(adjusted_x, adjusted_y), node_type='Defect')
-
+                G.add_node(defect['id'], pos=(adjusted_x, adjusted_y), node_type='defect')
+                H.add_node(defect['id'], pos=(adjusted_x, adjusted_y), node_type='defect')
 
     # 노드 위치와 타입 추출
     pos = nx.get_node_attributes(H, 'pos')
@@ -70,10 +70,10 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
 
     # 노드 색상 설정
     node_colors = [
-        'blue' if node_types[node] == 'Space' else
-        'green' if node_types[node] == 'Door' else
-        'red' if node_types[node] == 'Window' else
-        'orange' if node_types[node] == 'Defect' else 'gray' for node in H.nodes  # 결함 노드는 주황색으로 설정
+        'blue' if node_types[node] == 'space' else
+        'green' if node_types[node] == 'door' else
+        'red' if node_types[node] == 'window' else
+        'orange' if node_types[node] == 'defect' else 'gray' for node in H.nodes  # 결함 노드는 주황색으로 설정
     ]
 
     # 경로에 포함된 그래프를 이미지 위에 오버레이

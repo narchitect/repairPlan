@@ -1,10 +1,25 @@
 import json
+import re
 from data.robots import actions, equipments, materials, robots
 
 def load_scene_graph(file_path):
     with open(file_path, 'r') as f:
         scene_graph = json.load(f)
     return scene_graph
+
+def extract_json(response_content):
+    # Extract the JSON part from the response using regex
+    json_match = re.search(r'```json\n(.*?)\n```', response_content, re.DOTALL)
+    if json_match:
+        json_output = json_match.group(1)
+        try:
+            return json.loads(json_output)  # Parse and return the JSON content
+        except json.JSONDecodeError:
+            print("An error occurred while parsing the json response")
+            return None
+    else:
+        print("Can't find the JSON output section")
+        return None
 
 # Global full scene graph 
 SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full.json"
