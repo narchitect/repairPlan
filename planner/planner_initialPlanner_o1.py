@@ -10,7 +10,7 @@ client = OpenAI(
 
 
 
-def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[int], str]:
+def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[int]]:
 
     prompt = f"""
     You are an expert in building repairs with extensive knowledge of 3D scene graphs.
@@ -26,7 +26,6 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
     Final output should be in JSON format:
     -"defect_id": "integer defect node id or null",
     -"questions": "string with your questions or null"
-    -"reasoning": "summary of your reasoning"
     """
 
     # Initial attempt to identify the defect node
@@ -47,16 +46,12 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
 
     if output_json['defect_id'] is not None and output_json['questions'] is None or output_json['questions'] == "null":
         defect_id = output_json['defect_id']
-        reasoning = output_json['reasoning']
-        return defect_id, reasoning
+        return defect_id
     
     else:
         if output_json['questions']:
-            # Ask the user for more information
-            print("I need more information to identify the defect. Please answer the following questions:")
-            print(output_json['questions'])
             # Get user's answers
-            user_answers = input("Your answers: ")
+            user_answers = input(f"{output_json['questions']}")
 
             # Combine original user input with new answers
             combined_input = f"{user_input}\nAdditional Information: user_answer{user_answers}"
@@ -67,7 +62,7 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
             # Unable to identify and no questions generated
             print("Unable to identify the defect node based on the provided information.")
             print(output)
-            return None, output_json['reasoning']
+            return None
 
 
 
