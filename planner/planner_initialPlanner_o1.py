@@ -7,11 +7,7 @@ from utils.loader import get_node_info, extract_json
 client = OpenAI(
     api_key='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')
 
-
-
-
 def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[int]]:
-
     prompt = f"""
     You are an expert in building repairs with extensive knowledge of 3D scene graphs.
 
@@ -24,8 +20,10 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
     - If you find several suspicious defects based on the user's description, generate specific clarifying questions to specify the defects among them.
 
     Final output should be in JSON format:
-    -"defect_id": "integer defect node id or null",
-    -"questions": "string with your questions or null"
+    {{
+        "defect_id": integer defect node id or null,
+        "questions": string with your questions or null 
+    }}
     """
 
     # Initial attempt to identify the defect node
@@ -44,9 +42,8 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
 
     output_json = extract_json(output)
 
-    if output_json['defect_id'] is not None and output_json['questions'] is None or output_json['questions'] == "null":
-        defect_id = output_json['defect_id']
-        return defect_id
+    if output_json['defect_id'] is not None and output_json['questions'] is None:
+        return output_json['defect_id']
     
     else:
         if output_json['questions']:
@@ -64,8 +61,6 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
             print(output)
             return None
 
-
-
 def select_robot(user_input, defect_id, robot_db) -> tuple[Any, Any]:
     defect_info = get_node_info(defect_id)
 
@@ -81,8 +76,10 @@ def select_robot(user_input, defect_id, robot_db) -> tuple[Any, Any]:
     Select the best robot from the robot database to perform the repair task, considering its capability and reachability.
     Compare the robot's max_reachable_height with the defect's location.
     
-    Final output:
-    1. Robot node id: the id of the robot database as integer
+    Final output should be in JSON format:
+    {{
+        "Robot_id": integer robot node id
+    }}
     """
 
     response = client.beta.chat.completions.parse(
@@ -97,4 +94,5 @@ def select_robot(user_input, defect_id, robot_db) -> tuple[Any, Any]:
 
     output = response.choices[0].message.content
     print(output)
-    return output
+    output_json = extract_json(output)
+    return output_json['Robot_id']
