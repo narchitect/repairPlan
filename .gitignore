@@ -2,3 +2,5 @@
 data/.DS_Store
 *.pyc
 /data/__pycache__
+/visualizer/__pycache__
+/visualizer/__pycache__

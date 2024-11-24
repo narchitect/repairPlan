@@ -31,7 +31,6 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
             adjusted_y = reference_point_img[1] - (y * scale_factor)
             G.add_node(component['id'], pos=(adjusted_x, adjusted_y), node_type=component['type'])
     
-    
     # 경로에 포함된 노드와 엣지를 순서대로 추가
     H = nx.DiGraph()  # 방향 그래프로 생성하여 화살표 순서를 명확히 함
 
@@ -41,9 +40,18 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
         if node_id in G.nodes:
             # 노드를 H에 추가, G에서 위치와 타입 정보를 가져옴
             H.add_node(node_id, pos=G.nodes[node_id]['pos'], node_type=G.nodes[node_id]['node_type'])
+        else:
+            print(f"Node {node_id} does not exist in the graph.")
         if i < len(path) - 1:
-            # 순서에 맞게 엣지 추가
-            H.add_edge(path[i], path[i + 1])
+            next_node_id = path[i + 1]
+            if node_id in G.nodes and next_node_id in G.nodes:
+                # 순서에 맞게 엣지 추가
+                H.add_edge(node_id, next_node_id)
+            else:
+                if node_id not in G.nodes:
+                    print(f"Cannot add edge from {node_id} to {next_node_id} because {node_id} does not exist.")
+                if next_node_id not in G.nodes:
+                    print(f"Cannot add edge from {node_id} to {next_node_id} because {next_node_id} does not exist.")
 
     # 결함 노드 추가 및 위치 조정
     for category in ['spaces', 'surfaces', 'components']:
@@ -97,5 +105,3 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
     plt.savefig(output_path, dpi=300, transparent=False)
     plt.show()
 
-# 함수 사용 예시
-# overlay_navigation_path(["332","14", "330", "22", "328", "320"], load_scene_graph("../data/sceneGraphs/3dsg_withCOR.json"), '../data/image/top_view.png', "navigation_path_overlay2.png")
