@@ -27,7 +27,7 @@ def get_navigationPath_o1(defect_id: int, scene_graph) -> tuple[List[int], str]:
         }}
         """
 
-    response = client.beta.chat.completions.parse(
+    response = client.chat.completions.create(
         model="o1-preview",
         messages=[
             {

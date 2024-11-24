@@ -21,19 +21,17 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
 
     Final output should be in JSON format:
     {{
-        "defect_id": integer defect node id or null,
-        "questions": string with your questions or null 
+        "Defect_id": integer defect node id or null,
+        "Questions": string with your questions or null 
     }}
     """
 
     # Initial attempt to identify the defect node
-    response = client.beta.chat.completions.parse(
-        model="gpt-4o",
+    response = client.chat.completions.create(
+        model="o1-preview",
         messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": user_input}
+            {"role": "user", "content": prompt}
         ],
-
     )
 
     # Parse the assistant's response
@@ -42,13 +40,13 @@ def identify_defect_node(user_input: str, scene_graph: Any) -> Tuple[Optional[in
 
     output_json = extract_json(output)
 
-    if output_json['defect_id'] is not None and output_json['questions'] is None:
-        return output_json['defect_id']
+    if output_json['Defect_id'] is not None and output_json['Questions'] is None:
+        return output_json['Defect_id']
     
     else:
-        if output_json['questions']:
+        if output_json['Questions']:
             # Get user's answers
-            user_answers = input(f"{output_json['questions']}")
+            user_answers = input(f"{output_json['Questions']}")
 
             # Combine original user input with new answers
             combined_input = f"{user_input}\nAdditional Information: user_answer{user_answers}"
@@ -82,8 +80,8 @@ def select_robot(user_input, defect_id, robot_db) -> tuple[Any, Any]:
     }}
     """
 
-    response = client.beta.chat.completions.parse(
-        model="gpt-4o",
+    response = client.chat.completions.create(
+        model="o1-prieview",
         messages=[
             {
                 "role": "user",
