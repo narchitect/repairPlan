@@ -1,19 +1,20 @@
 actions = [
-    "loadArm(equipment, material =None)",
-    "unloadArm()",
-    "pickUp(element_id)",
-    "putDown(element_id)",
-    "placeInTrashBag(element_id)",
-    "spray(element_id)",
-    "wipeSurface(element_id)",
-    "smoothSurface(element_id)",
+    {"action": "loadArm", "parameters": ["equipment", "material=None"]},
+    {"action": "unloadArm", "parameters": []},
+    {"action": "pickUp", "parameters": ["element_id"], "preconditions": ["equipment == 'gripper'"]},
+    {"action": "putDown", "parameters": ["element_id"], "preconditions": ["equipment == 'gripper'"]},
+    {"action": "placeInTrashBag", "parameters": ["element_id"], "preconditions": ["equipment == 'gripper'"]},
+    {"action": "spraySurface", "parameters": ["element_id"], "preconditions": ["equipment == 'sprayGun'", "material != None"]},
+    {"action": "wipeSurface", "parameters": ["element_id"], "preconditions": ["equipment == 'wiper'", "surfaceIsWet == true"]},
+    {"action": "smoothSurface", "parameters": ["element_id"], "preconditions": ["equipment == 'scraper'"]},
 ]
+
 equipments = [
     "sprayGun",
     "brush",
     "wiper",
     "scraper",
-    "gripper"
+    "gripper",
 ]
 
 materials = [
@@ -38,7 +39,8 @@ robot1 = {
         "brush",
         "wiper",
         "scraper",
-        "gripper"
+        "gripper",
+        "vacuum"
     ],
     "materials": [
         "cleaning Solution",
@@ -46,7 +48,7 @@ robot1 = {
         "paint",
         "filler"
     ],
-    "size": {"width": 700, "height": 1500}, 
+    "size": {"width": 700, "height": 1500},  # Small size
     "max_reach_height": 2000,
     "camera": {"height": 1500, "FOV": 60}
 
@@ -67,7 +69,8 @@ robot2 = {
         "brush",
         "wiper",
         "scraper",
-        "gripper"
+        "gripper",
+        "vacuum"
     ],
     "materials": [
         "cleaning Solution",
@@ -76,7 +79,7 @@ robot2 = {
         "filler"
     ],
     "size": {"width": 850, "height": 1700},  # Medium size
-    "max_reach_height": 3000,  # Can reach up to 3 meters
+    "max_reach_height": 3700,  # Can reach up to 3 meters
     "camera": {"height": 1500, "FOV": 60}
 }
 
@@ -99,10 +102,6 @@ robot3 = {
         "gripper"
     ],
     "materials": [
-        "cleaning Solution",
-        "disinfectant",
-        "paint",
-        "filler"
     ],
     "size": {"width": 1600, "height": 2000},  # Large size
     "max_reach_height": 3700,
@@ -134,7 +133,7 @@ robot4 = {
         "filler"
     ],
     "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 2000,
+    "max_reach_height": 3700,
     "camera": {"height": 1600, "FOV": 80}
 }
 
@@ -264,13 +263,14 @@ robots_withConfig = {
             "materials": materials,
         },
         "robot_storage": {
-            "room_id": 1
+            "room_id": 46
         },
         "robots": [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10],
     }
 
 robots = [robot1, robot2, robot3, robot4, robot5, robot6, robot7, robot8, robot9, robot10]
 
+# print(robots_withConfig["robot_storage"])
 
 
 
