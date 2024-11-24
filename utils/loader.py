@@ -123,6 +123,13 @@ def get_rooms_info(node_id):
         # Node is neither surface nor component
         return {'error': f'Node ID {node_id} is neither surface nor component.'}
 
+    # If the defect_node is a surface, add its components to associated_nodes
+    if node_id in id_to_node['surfaces']:
+        for component_id in node.get('components', []):
+            component_node = id_to_node['components'].get(component_id)
+            if component_node:
+                associated_nodes.append(component_node)
+
     # Now collect all nodes that are associated with the same spaces
     # Collect associated surfaces and components
     for space_id in associated_space_ids:
@@ -137,6 +144,11 @@ def get_rooms_info(node_id):
                 component_node = id_to_node['components'].get(component_id)
                 if component_node and component_node['id'] != node_id:
                     associated_nodes.append(component_node)
+    
+    # if the defect_node is a component, add itselt to the associated_nodes
+    if node_id in id_to_node['components']:
+        associated_nodes.append(node)
+
 
     # Remove duplicates
     associated_nodes = list({n['id']: n for n in associated_nodes}.values())
