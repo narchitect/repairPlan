@@ -138,11 +138,11 @@ def visualize_scanning(defect_id, robot_id, camera_location, camera_direction):
 
 
 
-# Parameters based on your input
-defect_id = 4000
-robot_id = 6
-optimal_location = [-23.1614321, -15.4285, 2.4928653934551823]
-optimal_location_chatbot = [-23.7826, -15.4285, 2.4929]
-optimal_direction = [1, 0, 0]
+# # Parameters based on your input
+# defect_id = 4000
+# robot_id = 6
+# optimal_location = [-23.1614321, -15.4285, 2.4928653934551823]
+# optimal_location_chatbot = [-23.7826, -15.4285, 2.4929]
+# optimal_direction = [1, 0, 0]
 
-visualize_scanning(defect_id, robot_id, optimal_location_chatbot, optimal_direction)
+# visualize_scanning(defect_id, robot_id, optimal_location_chatbot, optimal_direction)

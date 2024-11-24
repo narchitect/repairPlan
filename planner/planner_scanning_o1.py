@@ -20,7 +20,8 @@ def get_scanning_plan_o1(defect_id, robot_id):
     Camera degrees Field of View (FOV): {camera_fov}
 
     Task:
-    - Find the optimal camera location to scan the defect object and the optimal camera direction to scan the entire area of the defect.
+    - Find the optimal camera location within the defect's room to scan the defect object and the optimal camera direction to scan the entire area of the defect.
+    - every windows are linked to the indoor walls.
     - if you can't find them, return the reason.
     
     Final Output should be in JSON format:
