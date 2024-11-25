@@ -6,14 +6,14 @@ from utils.loader import extract_json, get_room_id_by_node_id
 client = OpenAI(
     api_key='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')
 
-def get_navigationPath_o1(defect_id: int, scene_graph) -> tuple[List[int], str]:
-    defect_room_id = get_room_id_by_node_id(defect_id)
+def get_navigationPath_o1(room_id: int, scene_graph) -> tuple[List[int], str]:
+    scene_graph_links = scene_graph["links"]
     prompt = f"""
         You are an expert in navigation planning with graph data.
 
         Given the following information:
-        1. Building information in 3D Scene Graph: {scene_graph} 
-        2. Defect_room_id: {defect_room_id}
+        1. Room connections in the builiding: {scene_graph_links} 
+        2. Defect_room_id: {room_id}
         3. Robot storage location: {robots_withConfig["robot_storage"]}
 
         Task:

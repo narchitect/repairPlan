@@ -48,9 +48,9 @@ robot1 = {
         "paint",
         "filler"
     ],
-    "size": {"width": 700, "height": 1500},  # Small size
+    "size": {"width": 700, "height": 1500}, 
     "max_reach_height": 2000,
-    "camera": {"height": 1500, "FOV": 60}
+    "camera": {"height": 1500, "FOV": 90}
 
 }
 
@@ -78,9 +78,9 @@ robot2 = {
         "paint",
         "filler"
     ],
-    "size": {"width": 850, "height": 1700},  # Medium size
-    "max_reach_height": 3700,  # Can reach up to 3 meters
-    "camera": {"height": 1500, "FOV": 60}
+    "size": {"width": 850, "height": 1700},  
+    "max_reach_height": 3700,  
+    "camera": {"height": 1500, "FOV": 90}
 }
 
 
@@ -103,9 +103,9 @@ robot3 = {
     ],
     "materials": [
     ],
-    "size": {"width": 1600, "height": 2000},  # Large size
+    "size": {"width": 1600, "height": 2000}, 
     "max_reach_height": 3700,
-    "camera": {"height": 1200, "FOV": 70}  
+    "camera": {"height": 1200, "FOV": 90}  
 }
 
 
@@ -132,9 +132,9 @@ robot4 = {
         "paint",
         "filler"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "size": {"width": 700, "height": 1600}, 
     "max_reach_height": 3700,
-    "camera": {"height": 1600, "FOV": 80}
+    "camera": {"height": 1600, "FOV": 90}
 }
 
 robot5 = {
@@ -160,8 +160,8 @@ robot5 = {
         "paint",
         "filler"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 3700,  # Maximum reach
+    "size": {"width": 700, "height": 1600},  
+    "max_reach_height": 3700,  
     "camera": {"height": 1800, "FOV": 90}
 }
 
@@ -177,9 +177,9 @@ robot6 = {
     "materials": [
         "cleaning Solution"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "size": {"width": 700, "height": 1600}, 
     "max_reach_height": 3700,
-    "camera": {"height": 1700, "FOV": 60}  # Can reach windows up to ceiling height
+    "camera": {"height": 1700, "FOV": 90}  
 }
 
 
@@ -196,9 +196,9 @@ robot7 = {
     "materials": [
         "disinfectant"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "size": {"width": 700, "height": 1600},  
     "max_reach_height": 2000,
-    "camera": {"height": 1500, "FOV": 70}
+    "camera": {"height": 1500, "FOV": 90}
 }
 
 robot8 = {
@@ -212,9 +212,9 @@ robot8 = {
     "materials": [
         "paint"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
+    "size": {"width": 700, "height": 1600}, 
     "max_reach_height": 3700,
-    "camera": {"height": 1700, "FOV": 80}  
+    "camera": {"height": 1700, "FOV": 90}  
 }
 
 
@@ -230,8 +230,8 @@ robot9 = {
     "materials": [
         "filler"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 3700,  # Can reach cracks at any height
+    "size": {"width": 700, "height": 1600},  
+    "max_reach_height": 3700, 
     "camera": {"height": 1500, "FOV": 90}
 }
 
@@ -245,8 +245,8 @@ robot10 = {
     "equipments": [
         "gripper"
     ],
-    "size": {"width": 700, "height": 1600},  # Fits all doors
-    "max_reach_height": 2000,  # Sufficient for ground-level trash collection
+    "size": {"width": 700, "height": 1600},  
+    "max_reach_height": 2000, 
     "camera": {"height": 1300, "FOV": 90}
 }
 
