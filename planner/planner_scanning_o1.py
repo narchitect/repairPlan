@@ -7,7 +7,7 @@ client = OpenAI(
     api_key='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')
 
 # Function to find the optimal scanning location
-def get_scanning_plan_o1(defect_id, robot_id):
+def get_scanning_plan_o1(defect_id, robot_id, gpt_model: str = "gpt-4o"):
     selected_robot_info = get_robot_info_by_id(robot_id)
     camera_fov = selected_robot_info["robots"]["camera"]["FOV"]
     env_data = get_rooms_info(defect_id)
@@ -34,7 +34,7 @@ def get_scanning_plan_o1(defect_id, robot_id):
 
     # Call the OpenAI API
     response = client.chat.completions.create(
-        model="o1-preview",
+        model= gpt_model,
         messages=[
             {"role": "user", "content": prompt}
         ],

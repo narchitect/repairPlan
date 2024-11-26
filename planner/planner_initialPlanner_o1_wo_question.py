@@ -19,13 +19,11 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
     Task:
     - Identify the defect node in the 3D scene graph using the user's description.
     - Identify the room node where the defect node is located.
-    - If you find several suspicious defects based on the user's description, generate specific clarifying questions to specify the defects among them.
 
     Final output should be in JSON format:
     {{
         "Defect_id": integer defect node id or null,
         "Room_id": integer room node id where defect node is located, null
-        "Questions": string with your questions or null 
     }}
     """
 
@@ -42,25 +40,7 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
     print(output)
 
     output_json = extract_json(output)
-
-    if output_json['Defect_id'] is not None and output_json['Questions'] is None:
-        return output_json['Defect_id'], output_json['Room_id']
-    
-    else:
-        if output_json['Questions']:
-            # Get user's answers
-            user_answers = input(f"{output_json['Questions']} your answer:")
-
-            # Combine original user input with new answers
-            combined_input = f"{user_input}\nAdditional Information: user_answer{user_answers}"
-
-            # Retry identification with the new information
-            return identify_defect_node(combined_input, scene_graph)
-        else:
-            # Unable to identify and no questions generated
-            print("Unable to identify the defect node based on the provided information.")
-            print(output)
-            return None, None
+    return output_json['Defect_id'], output_json['Room_id']
 
 def select_robot(user_input, defect_id, robot_db, gpt_model: str = "gpt-4o") -> tuple[Any, Any]:
     defect_info = get_node_info(defect_id)

@@ -19,8 +19,7 @@ class TaskData(BaseModel):
     user_description: str
     defect_id: int
     robot_id: int
-    room_id: str
+    room_id: int
     navigation_path: List[int]
     scanning_info: ScanningInfo
     robotTasks: List[str]
-    reasons: Reason
