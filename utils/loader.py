@@ -22,7 +22,7 @@ def extract_json(response_content):
         return None
 
 # Global full scene graph 
-SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full.json"
+SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full_fixed_doors.json"
 GLOBAL_SCENE_GRAPH = load_scene_graph(SCENE_GRAPH_PATH)
 
 def get_node_info(node_id: int) -> str:

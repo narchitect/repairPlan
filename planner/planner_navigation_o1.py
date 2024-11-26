@@ -40,7 +40,7 @@ def get_navigationPath_o1(room_id: int, scene_graph, gpt_model: str = "gpt-4o") 
     )
 
     output = response.choices[0].message.content
-    print(output)
+    # print(output)
     path_json = extract_json(output)
 
     

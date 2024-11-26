@@ -46,8 +46,8 @@ def a_star_path_planner(scene_graph, start_room, target_room):
 
 
 scene_graph = load_scene_graph("/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full.json")
-start_room = 31
-target_room =9   
+start_room = 46
+target_room =34  
 
 llm_path = [46, 5042, 59, 5043, 44, 5054, 41, 5068, 5, 5062, 6, 5000, 9]
 
