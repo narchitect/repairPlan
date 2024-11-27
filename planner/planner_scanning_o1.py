@@ -1,5 +1,5 @@
 from openai import OpenAI
-from utils.loader import get_rooms_info, get_robot_info_by_id, extract_json
+from utils.loader import get_rooms_infos, get_robot_info_by_id, extract_json
 
 
 # Set your OpenAI API key
@@ -10,7 +10,7 @@ client = OpenAI(
 def get_scanning_plan_o1(defect_id, robot_id, gpt_model: str = "gpt-4o"):
     selected_robot_info = get_robot_info_by_id(robot_id)
     camera_fov = selected_robot_info["robots"]["camera"]["FOV"]
-    env_data = get_rooms_info(defect_id)
+    env_data = get_room_infoㄴ(defect_id)
 
     prompt = f"""
     You are an expert in scanning camera positioning.

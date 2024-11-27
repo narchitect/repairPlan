@@ -3,7 +3,7 @@ from openai import OpenAI
 from pydantic import BaseModel, Field
 from typing import List
 from data.robots import robots
-from utils.loader import get_rooms_info, get_robot_info_by_id
+from utils.loader import get_room_infos, get_robot_info_by_id
 
 #initialize OpenAI client
 client = OpenAI(api_key='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')
@@ -14,7 +14,7 @@ class RepairPlan(BaseModel):
     reasoning: str
 
 def get_repair_plan(user_info, defect_id, robot_id):
-    room_info = get_rooms_info(defect_id)
+    room_info = get_room_infos(defect_id)
     robot_info = get_robot_info_by_id(robot_id)
 
     prompt = f"""

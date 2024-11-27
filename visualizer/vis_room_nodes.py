@@ -5,11 +5,11 @@ import matplotlib.image as mpimg
 def visualize_room_nodes(room_node_id):
     # 장면 그래프 로드
     from utils.loader import load_scene_graph
-    scene_graph_full = load_scene_graph("/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full.json")
+    scene_graph_full = load_scene_graph("/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full_fixed_doors.json")
     
     # 이미지 경로 설정
     image_path = "/Users/nayunkim/Documents/GitHub/repairPlan/data/images/top_view.png"
-    output_path = "/Users/nayunkim/Documents/GitHub/repairPlan/data/images/room0_nodes.png"
+    output_path = f"/Users/nayunkim/Documents/GitHub/repairPlan/data/images/room{room_node_id}_nodes.png"
     
     # 배경 이미지 로드
     img = mpimg.imread(image_path)
@@ -144,4 +144,4 @@ def visualize_room_nodes(room_node_id):
 
 
 # Room 노드 ID를 지정하여 호출
-visualize_room_nodes(room_node_id=0)
+visualize_room_nodes(room_node_id=42)

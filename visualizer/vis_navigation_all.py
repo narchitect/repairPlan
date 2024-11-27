@@ -89,9 +89,9 @@ def visualize_all_nodes():
         with_labels=True,
         node_color=node_colors,
         edge_color='gray',
-        node_size=100,
-        font_size=6,
-        font_color='black',
+        node_size=300,
+        font_size=10,
+        font_color='white',
     )
     
     plt.tight_layout()

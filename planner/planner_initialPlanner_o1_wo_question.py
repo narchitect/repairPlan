@@ -21,10 +21,8 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
     - Identify the room node where the defect node is located.
 
     Final output should be in JSON format:
-    {{
-        "Defect_id": integer defect node id or null,
-        "Room_id": integer room node id where defect node is located, null
-    }}
+    "Defect_id": integer defect node id or null,
+    "Room_id": integer room node id where defect node is located, null
     """
 
     # Initial attempt to identify the defect node
@@ -37,10 +35,12 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
 
     # Parse the assistant's response
     output = response.choices[0].message.content
-    print(output)
+    # print(output)
 
     output_json = extract_json(output)
-    return output_json['Defect_id'], output_json['Room_id']
+    # print(output_json)
+    # print(type(output_json))
+    return output_json["Defect_id"], output_json['Room_id']
 
 def select_robot(user_input, defect_id, robot_db, gpt_model: str = "gpt-4o") -> tuple[Any, Any]:
     defect_info = get_node_info(defect_id)
