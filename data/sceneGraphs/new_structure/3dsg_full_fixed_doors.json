@@ -2640,7 +2640,9 @@
             {
                 "id": 1072,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5059
+                ],
                 "location": [
                     -10.0585,
                     -77.4786,
@@ -3418,7 +3420,9 @@
             {
                 "id": 1094,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5053
+                ],
                 "location": [
                     -14.9985,
                     -54.15075,
@@ -3767,7 +3771,9 @@
             {
                 "id": 1108,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5070
+                ],
                 "location": [
                     -10.0585,
                     -23.56855,
@@ -3978,7 +3984,9 @@
             {
                 "id": 1115,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5046
+                ],
                 "location": [
                     -14.9985,
                     -73.7286,
@@ -4979,7 +4987,11 @@
             {
                 "id": 1144,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5052,
+                    5063,
+                    5065
+                ],
                 "location": [
                     -10.0585,
                     -94.5286,
@@ -5208,7 +5220,9 @@
             {
                 "id": 1153,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5056
+                ],
                 "location": [
                     -10.0585,
                     -64.8236,
@@ -6320,7 +6334,9 @@
             {
                 "id": 1192,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5066
+                ],
                 "location": [
                     -10.0585,
                     -53.9386,
@@ -6335,7 +6351,9 @@
             {
                 "id": 1193,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5061
+                ],
                 "location": [
                     -10.0585,
                     -108.48705,
@@ -6756,7 +6774,9 @@
             {
                 "id": 1209,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5055
+                ],
                 "location": [
                     -10.0585,
                     -33.5286,
@@ -7038,7 +7058,9 @@
             {
                 "id": 1225,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5047
+                ],
                 "location": [
                     -10.0585,
                     -69.5786,
@@ -7160,7 +7182,9 @@
             {
                 "id": 1232,
                 "type": "wall",
-                "components": [],
+                "components": [
+                    5045
+                ],
                 "location": [
                     -21.38,
                     -9.58045,
