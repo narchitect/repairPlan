@@ -9,7 +9,7 @@ def visualize_all_nodes():
     
     # 이미지 경로 설정
     image_path = "/Users/nayunkim/Documents/GitHub/repairPlan/data/images/top_view.png"
-    output_path = "/Users/nayunkim/Documents/GitHub/repairPlan/data/images/all_nodes.png"
+    output_path = "/Users/nayunkim/Documents/GitHub/repairPlan/data/images/all_nodes_with_floor_ceiling.png"
     
     # 배경 이미지 로드
     img = mpimg.imread(image_path)
@@ -22,26 +22,33 @@ def visualize_all_nodes():
     scale_factor = 9.8
     
     # 노드 추가
-    for category in ['spaces', 'components']:
+    for category in ['spaces', 'components', 'surfaces']:
         for node in scene_graph_full['nodes'].get(category, []):
             x, y, z = node['location']
             adjusted_x = (x * scale_factor) + reference_point_img[0]
             adjusted_y = reference_point_img[1] - (y * scale_factor)
-            
-            # 노드 ID에 카테고리 접두사 추가
-            node_id = f"{node['id']}"
             
             # 노드 타입 설정
             if category == 'spaces':
                 node_type = 'space'
             else:
                 node_type = node.get('type', 'unknown')
-            
+
+            # 노드 타입에 따라 좌표 조정
+            if node_type == 'floor':
+                adjusted_x -= 15  # floor는 room 노드 왼쪽에 배치
+            elif node_type == 'ceiling':
+                adjusted_x += 15  # ceiling은 room 노드 오른쪽에 배치
+
+            # 노드 ID에 카테고리 접두사 추가
+            node_id = f"{node['id']}"
+
             G.add_node(
                 node_id,
                 pos=(adjusted_x, adjusted_y),
                 node_type=node_type
             )
+
     
     # 노드 위치와 타입 추출
     pos = nx.get_node_attributes(G, 'pos')
@@ -63,6 +70,10 @@ def visualize_all_nodes():
             node_colors.append('blue')
         elif n_type == 'wall':
             node_colors.append('green')
+        elif n_type == 'floor':
+            node_colors.append('yellow')
+        elif n_type == 'ceiling':
+            node_colors.append('purple')
         elif n_type == 'door':
             node_colors.append('red')
         elif n_type == 'window':

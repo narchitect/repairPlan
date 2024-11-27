@@ -80,7 +80,7 @@ def get_room_id_by_node_id(node_id):
         print(f"Node ID {node_id} not found in spaces, surfaces, or components.")
         return None
 
-def get_rooms_info(node_id):
+def get_room_infos(node_id):
     scene_graph = GLOBAL_SCENE_GRAPH.get('nodes', {})
     # Build lookup dictionaries for quick access
     id_to_node = {
