@@ -1,10 +1,10 @@
 import plotly.graph_objects as go
 import numpy as np
-from utils.loader import get_rooms_info, get_robot_info_by_id
+from utils.loader import get_room_infos, get_robot_info_by_id
 
 
 def visualize_scanning(defect_id, robot_id, camera_location, camera_direction):
-    env_data = get_rooms_info(defect_id)
+    env_data = get_room_infos(defect_id)
     print(env_data)
     # 시야각(FOV) 정의
     fov = get_robot_info_by_id(robot_id)["robots"]["camera"]["FOV"]

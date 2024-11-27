@@ -144,4 +144,4 @@ def visualize_room_nodes(room_node_id):
 
 
 # Room 노드 ID를 지정하여 호출
-visualize_room_nodes(room_node_id=42)
+visualize_room_nodes(room_node_id=39)

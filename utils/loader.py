@@ -1,6 +1,6 @@
 import json
 import re
-from data.robots import actions, equipments, materials, robots
+from data.robots2 import actions, equipments, materials, robots
 
 def load_scene_graph(file_path):
     with open(file_path, 'r') as f:
