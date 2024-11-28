@@ -105,3 +105,4 @@ def visualize_navigation(path, defect_id, data, image_path, output_path):
     plt.savefig(output_path, dpi=300, transparent=False)
     plt.show()
 
+

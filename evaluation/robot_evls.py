@@ -11,12 +11,12 @@ direct_requests: List[Tuple[str, int, int, List[str]]] = [
         3047,
         1,
         [
-            "loadArm(sprayGun, cleaningSolution)",
-            "spraySurface(3047)",
-            "unloadArm()",
-            "loadArm(wiper)",
-            "wipeSurface(3047)",
-            "unloadArm()"
+            'loadArm(sprayGun, cleaningSolution)', 
+            'spraySurface(3047)', 
+            'unloadArm()', 
+            'loadArm(wiper)', 
+            'wipeSurface(3047)', 
+            'unloadArm()'
         ]
     ),
     (
@@ -63,8 +63,8 @@ direct_requests: List[Tuple[str, int, int, List[str]]] = [
         3047,
         5,
         [
-            "loadArm(gripper)",
             "scanTrashes(3047)",
+            "loadArm(gripper)",
             "collectTrashes()",
             "placeInTrashBag()",
             "unloadArm()"
@@ -130,8 +130,8 @@ indirect_requests: List[Tuple[str, int, int, List[str]]] = [
         3047,
         5,
         [
-            "loadArm(gripper)",
             "scanTrashes(3047)",
+            "loadArm(gripper)",
             "collectTrashes()",
             "placeInTrashBag()",
             "unloadArm()"
@@ -168,12 +168,18 @@ multiple_tasks_requests: List[Tuple[str, List[int], int, List[str]]] = [
         1082,
         9,
         [
-            "loadArm(scrapper, filler)",
-            "polishSurface(1082)",
+            "loadArm(sprayGun, filler)",
+            "spraySurface(1082)",
             "unloadArm()",
-            "loadArm(roller, paint)",
-            "rollSurface(1082)",
-            "unloadArm()"
+            "loadArm(scraper)",
+            "spreadFiller(1082)",
+            "unloadArm()",
+            "loadArm(sprayGun, paint)",
+            "spraySurface(1082)",
+            "unloadArm()",
+            "loadArm(roller)",
+            "spreadPaint(1082)",
+            "unloadArm()",
         ]
     ),
     (
@@ -181,12 +187,15 @@ multiple_tasks_requests: List[Tuple[str, List[int], int, List[str]]] = [
         [3047, 1082],
         8,
         [
-            "loadArm(gripper)",
             "scanTrashes(3047)",
+            "loadArm(gripper)",
             "collectTrashes()",
             "placeInTrashBag()",
             "unloadArm()",
-            "loadArm(roller, paint)",
+            "loadArm(sprayGun, paint)",
+            "spraySurface(1082)",
+            "unloadArm()",
+            "loadArm(roller)",
             "rollSurface(1082)",
             "unloadArm()"
         ]
@@ -196,16 +205,16 @@ multiple_tasks_requests: List[Tuple[str, List[int], int, List[str]]] = [
         [4019, 4036],
         10,
         [
-            "loadArm(sprayGun, cleaning Solution)",
+            "loadArm(sprayGun, cleaningSolution)",
             "spraySurface(4019)",
-            "unloadArm()",
-            "loadArm(wiper)",
-            "wipeSurface(4019)",
+            "spraySurface(4036)",
             "unloadArm()",
             "loadArm(sprayGun, disinfectant)",
+            "spraySurface(4019)",
             "spraySurface(4036)",
             "unloadArm()",
             "loadArm(wiper)",
+            "wipeSurface(4019)",
             "wipeSurface(4036)",
             "unloadArm()"
         ]
@@ -271,22 +280,22 @@ def evaluate_robot_actions(requests, category_name):
         # Call get_repair_plan function
         predicted_actions = get_repair_plan(user_input, defect_id, ground_truth_robot_id)
 
-        # # Compare predicted actions with ground truth actions
-        # is_correct_actions = predicted_actions == ground_truth_actions
-        # if is_correct_actions:
-        #     correct_count += 1
+        # Compare predicted actions with ground truth actions
+        is_correct_actions = predicted_actions == ground_truth_actions
+        if is_correct_actions:
+            correct_count += 1
 
-        # total_tests += 1
+        total_tests += 1
 
         # Output the results
         print(f"Test {idx + 1}: {user_input}")
         print(f"Predicted Actions: {predicted_actions}")
-        # print(f"Ground Truth Actions: {ground_truth_actions}")
-        # print(f"Repair Plan Result: {'Correct' if is_correct_actions else 'Incorrect'}\n")
+        print(f"Ground Truth Actions: {ground_truth_actions}")
+        print(f"Repair Plan Result: {'Correct' if is_correct_actions else 'Incorrect'}\n")
 
-    # # Calculate accuracy for this category
-    # accuracy = (correct_count / total_tests) * 100
-    # print(f"{category_name} Robot Actions Accuracy: {accuracy:.2f}%\n")
+    # Calculate accuracy for this category
+    accuracy = (correct_count / total_tests) * 100
+    print(f"{category_name} Robot Actions Accuracy: {accuracy:.2f}%\n")
 
 
 # Example of how to call these functions

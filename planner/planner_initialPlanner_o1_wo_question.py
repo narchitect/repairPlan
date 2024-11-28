@@ -1,7 +1,7 @@
 from typing import Tuple, Any, Optional
 from openai import OpenAI
 from pydantic import BaseModel
-from utils.loader import get_node_info, extract_json
+from utils.loader import get_node_info, extract_json, get_nodes_info
 
 
 client = OpenAI(
@@ -21,7 +21,7 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
     - Identify the room node where the defect node is located.
 
     Final output should be in JSON format:
-    "Defect_id": integer defect node id or null,
+    "Defect_id": integer defect node id or null (if multiple defect nodes are found, return a list of defect node ids),
     "Room_id": integer room node id where defect node is located, null
     """
 
@@ -43,7 +43,10 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
     return output_json["Defect_id"], output_json['Room_id']
 
 def select_robot(user_input, defect_id, robot_db, gpt_model: str = "gpt-4o") -> tuple[Any, Any]:
-    defect_info = get_node_info(defect_id)
+    if isinstance(defect_id, list):
+        defect_info = get_nodes_info(defect_id)
+    else:
+        defect_info = get_node_info(defect_id)
 
     prompt = f"""
     You are an expert in robot capabilities and reachability.

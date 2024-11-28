@@ -215,6 +215,4 @@ def get_robot_info_by_id(robot_id):
     }
     return result
 
-if __name__ == "__main__":
-    print(get_room_infos_defects([4019, 4036]))
-
+# if __name__ == "__main__":
