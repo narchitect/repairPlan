@@ -31,19 +31,16 @@ def get_repair_plan(user_info, defect_id, robot_id, gpt_model: str="gpt-4o"):
         Environmental Context:
         {json.dumps(room_info, indent=2)}
 
-        Task:
-        1. suggest a sequence of actions to repair the defect based on the selected robot's capability and the environmental context
-        2. ensure the parameters of the actions are correctly set
-        3. once the robot has finished the task, it should unload all the equipment
-        
-        The final output should be a JSON object with the following fields:
-        - action_sequence: List[str]
-        - reasoning: str
+        Key Considerations:
+        - The robot is equipped with a single arm and can "load" only one piece of equipment at a time. It must "unload" before loading another.
+        - Actions for the robot are parameterized, such as 'spray<object>', where '<object>' is the node ID from the 3D scene graph.
+        - Ensure that the action sequence strictly uses node IDs from the provided environmental data.
+        - Carefully consider the relationship between each action and the equipment loaded.
+        - At the conclusion of the task, ensure the robot unloads all equipment.
 
-        For example output:
-        {
-            "action_sequence": ["loadArm(sprayGun, cleaning Solution)", "spray(4068)", "unloadArm()", "loadArm(wiper)", "wipeSurface(4068)", "unloadArm()"],
-        }
+        Your objectives are:
+        1. Develop a comprehensive and precise action sequence for the selected robot to execute the repair, leveraging its capabilities and the environmental context provided.
+        2. Integrate parameters into the actions as specified in the robot's action list, utilizing node IDs from the 3D scene graph.
         """
 
     # API call

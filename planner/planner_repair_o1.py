@@ -1,12 +1,15 @@
 import json
 from openai import OpenAI
-from utils.loader import get_room_infos, get_robot_info_by_id, extract_json
+from utils.loader import get_room_infos, get_robot_info_by_id, extract_json, get_room_infos_defects
 
 #initialize OpenAI client
 client = OpenAI(api_key='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')
 
 def get_repair_plan(user_info, defect_id, robot_id, gpt_model: str="gpt-4o"):
-    room_info = get_room_infos(defect_id)
+    if isinstance(defect_id, list):
+        room_info = get_room_infos_defects(defect_id)
+    else:
+        room_info = get_room_infos(defect_id)
     robot_info = get_robot_info_by_id(robot_id)
 
     prompt = f"""

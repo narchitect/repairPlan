@@ -166,7 +166,7 @@ multiple_tasks_requests: List[Tuple[str, List[int], int, List[str]]] = [
     (
         "The wall needs to be filled and painted",
         1082,
-        7,
+        9,
         [
             "loadArm(scrapper, filler)",
             "polishSurface(1082)",
@@ -194,7 +194,7 @@ multiple_tasks_requests: List[Tuple[str, List[int], int, List[str]]] = [
     (
         "All windows in the room need to be cleaned and disinfected",
         [4019, 4036],
-        9,
+        10,
         [
             "loadArm(sprayGun, cleaning Solution)",
             "spraySurface(4019)",

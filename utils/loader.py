@@ -41,6 +41,26 @@ def get_node_info(node_id: int) -> str:
     result_dict = result if result else {"error": f"Node {node_id} not found"}
     return result_dict
 
+def get_nodes_info(node_ids: list) -> list:
+    full_graph = GLOBAL_SCENE_GRAPH.get('nodes', {})
+
+    # flatten
+    all_nodes = [
+        node for key in full_graph
+        for node in full_graph.get(key, []) if isinstance(full_graph[key], list)
+    ]
+
+    results = []
+    for node_id in node_ids:
+        # find the node with the matching id
+        result = next((node for node in all_nodes if node["id"] == node_id), None)
+
+        # convert the result to a string
+        result_dict = result if result else {"error": f"Node {node_id} not found"}
+        results.append(result_dict)
+    
+    return results
+
 def get_room_id_by_node_id(node_id):
     nodes = GLOBAL_SCENE_GRAPH["nodes"]
     # Build sets of IDs for quick lookup
@@ -163,6 +183,23 @@ def get_room_infos(node_id):
 
     return result
 
+def get_room_infos_defects(node_ids: list):
+    # 첫 번째 defect_id로 room_infos 생성
+    room_infos = get_room_infos(node_ids[0])
+    
+    # defect_node를 리스트로 변환하여 추가적인 defect 정보를 포함
+    defect_nodes = [room_infos["defect_node"]]
+    
+    # 나머지 defect_ids에 대한 정보를 추가
+    additional_defects = get_nodes_info(node_ids[1:])
+    defect_nodes.extend(additional_defects)
+    
+    # room_infos에 defect_nodes 업데이트
+    room_infos["defect_node"] = defect_nodes
+
+    return room_infos
+
+
 
 
 def get_robot_info_by_id(robot_id):
@@ -179,4 +216,5 @@ def get_robot_info_by_id(robot_id):
     return result
 
 if __name__ == "__main__":
-    print(get_node_info(1004))
+    print(get_room_infos_defects([4019, 4036]))
+
