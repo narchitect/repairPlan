@@ -1,28 +1,125 @@
-actions = [
-    {"action": "loadArm", "parameters": ["equipment", "material=None"], "preconditions": ["if equipment == 'sprayGun' and material != None"]},
-    {"action": "unloadArm", "parameters": []},
-    {"action": "collectTrashes", "parameters": [], "preconditions": ["equipment == 'gripper'", "action='scanTrashes'"]},
-    {"action": "scanTrashes", "parameters": ["surface_id"], "preconditions": ["equipment == None", "element_type == 'floor'"]},
-    {"action": "placeInTrashBag", "parameters": [], "preconditions": ["equipment == 'gripper'", "action='collectTrashes'"]},
-    {"action": "spraySurface", "parameters": ["surface_id"], "preconditions": ["equipment == 'sprayGun'", "material != None"]},
-    {"action": "wipeSurface", "parameters": ["surface_id"], "preconditions": ["equipment == 'wiper'", "surfaceIsWet == true"]},
-    {"action": "spreadPaint", "parameters": ["surface_id"], "preconditions": ["equipment == 'roller'", "previous_action='spraySurface'", "material == 'paint'"]},
-    {"action": "spreadFiller", "parameters": ["surface_id"], "preconditions": ["equipment == 'scrapper'", "previous_action='spraySurface'", "material == 'filler'"]},
-]
+# Robot State
+robot_state = {
+    "equipment": None,
+    "material": None,
+    "lastAction": None
+}
 
+# Equipments
 equipments = [
     "sprayGun",
     "wiper",
     "scraper",
     "gripper",
+    "roller"
 ]
 
+# Materials
 materials = [
-    "cleaningSolution",
-    "disinfectant",
     "paint",
-    "filler"
+    "disinfectant",
+    "cleaningSolution"
 ]
+
+# Actions
+actions = [
+    {
+        "action": "loadEquipment",
+        "parameters": ["equipment", "material=None"],
+        "preconditions": [
+            "equipment == None",
+            "material != None if equipment == sprayGun else True"
+        ],
+        "effects": [
+            "robot_state[equipment] = equipment",
+            "robot_state[material] = material"
+        ]
+    },
+    {
+        "action": "unloadEquipment",
+        "parameters": [],
+        "preconditions": ["robot_state[equipment] != None"],
+        "effects": [
+            "robot_state[equipment] = None",
+            "robot_state[material] = None"
+        ]
+    },
+    {
+        "action": "scanTrashes",
+        "parameters": ["surface_id"],
+        "preconditions": ["robot_state[equipment] == None", "element_type == floor"],
+        "effects": [
+            "robot_state[lastAction] = scanTrashes"
+        ]
+    },
+    {
+        "action": "collectTrashes",
+        "parameters": [],
+        "preconditions": [
+            "robot_state[equipment] == gripper",
+            "robot_state[lastAction] == scanTrashes"
+        ],
+        "effects": [
+            "robot_state[lastAction] = collectTrashes"
+        ]
+    },
+    {
+        "action": "placeInTrashBag",
+        "parameters": [],
+        "preconditions": [
+            "robot_state[equipment] == gripper",
+            "robot_state[lastAction] == collectTrashes"
+        ],
+        "effects": [
+            "robot_state[lastAction] = placeInTrashBag"
+        ]
+    },
+    {
+        "action": "spraySurface",
+        "parameters": ["surface_id"],
+        "preconditions": [
+            "robot_state[equipment] == sprayGun",
+            "robot_state[material] != None"
+        ],
+        "effects": [
+            "robot_state[surfaceIsWet][surface_id] = True",
+            "robot_state[lastAction] = spraySurface"
+        ]
+    },
+    {
+        "action": "wipeSurface",
+        "parameters": ["surface_id"],
+        "preconditions": [
+            "robot_state[equipment] == wiper",
+            "robot_state[surfaceIsWet].get(surface_id, False) == True"
+        ],
+        "effects": [
+            "robot_state[surfaceIsWet][surface_id] = False",
+            "robot_state[lastAction] = wipeSurface"
+        ]
+    },
+    {
+        "action": "rollSurface",
+        "parameters": ["surface_id"],
+        "preconditions": [
+            "robot_state[equipment] == roller"
+        ],
+        "effects": [
+            "robot_state[lastAction] = rollSurface"
+        ]
+    },
+    {
+        "action": "polishSurface",
+        "parameters": ["surface_id"],
+        "preconditions": [
+            "robot_state[equipment] == scraper"
+        ],
+        "effects": [
+            "robot_state[lastAction] = polishSurface"
+        ]
+    }
+]
+
 
 robots = [
     {
@@ -67,7 +164,7 @@ robots = [
             "loadArm",
             "unloadArm",
             "spraySurface",
-            "spreadPaint"
+            "rollSurface"
         ],
         "equipments": [
             "sprayGun",
@@ -85,7 +182,7 @@ robots = [
             "loadArm",
             "unloadArm",
             "spraySurface",
-            "spreadFiller"
+            "polishSurface"
         ],
         "equipments": [
             "sprayGun",
@@ -119,7 +216,7 @@ robots = [
             "loadArm",
             "unloadArm",
             "spraySurface",
-            "spreadFiller"
+            "polishSurface"
         ],
         "equipments": [
             "sprayGun",
@@ -137,7 +234,7 @@ robots = [
             "loadArm",
             "unloadArm",
             "spraySurface",
-            "spreadPaint"
+            "rollSurface"
         ],
         "equipments": [
             "sprayGun",
@@ -158,7 +255,7 @@ robots = [
             "collectTrashes",
             "placeInTrashBag",
             "spraySurface",
-            "spreadPaint"
+            "rollSurface"
         ],
         "equipments": [
             "gripper",
@@ -177,8 +274,8 @@ robots = [
             "loadArm",
             "unloadArm",
             "spraySurface",
-            "spreadFiller",
-            "spreadPaint"
+            "polishSurface",
+            "rollSurface"
         ],
         "equipments": [
             "sprayGun",

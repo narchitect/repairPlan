@@ -55,6 +55,7 @@ def select_robot(user_input, defect_id, robot_db, gpt_model: str = "gpt-4o") -> 
     
     Task:
     Select the best robot from the robot database to perform the repair task, considering its capability and reachability.
+    - if you can find sevral robots to perform the task, select the one with the lowest cost.
     Compare the robot's max_reachable_height with the defect's location.
     
     Final output should be in JSON format:
@@ -74,6 +75,6 @@ def select_robot(user_input, defect_id, robot_db, gpt_model: str = "gpt-4o") -> 
     )
 
     output = response.choices[0].message.content
-    print(output)
+    # print(output)
     output_json = extract_json(output)
     return output_json['Robot_id']

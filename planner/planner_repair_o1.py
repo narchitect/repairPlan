@@ -1,17 +1,9 @@
 import json
 from openai import OpenAI
-from pydantic import BaseModel, Field
-from typing import List
-from data.robots import robots
-from utils.loader import get_room_infos, get_robot_info_by_id
+from utils.loader import get_room_infos, get_robot_info_by_id, extract_json
 
 #initialize OpenAI client
 client = OpenAI(api_key='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')
-
-# Output schema
-class RepairPlan(BaseModel):
-    action_sequence: List[str]
-    reasoning: str
 
 def get_repair_plan(user_info, defect_id, robot_id, gpt_model: str="gpt-4o"):
     room_info = get_room_infos(defect_id)
@@ -25,42 +17,47 @@ def get_repair_plan(user_info, defect_id, robot_id, gpt_model: str="gpt-4o"):
         User Defect Description:
         {user_info}
 
-        Robot Specifications:
+        Robot information:
         {json.dumps(robot_info, indent=2)}
 
         Environmental Context:
         {json.dumps(room_info, indent=2)}
 
-        Task:
-        1. suggest a sequence of actions to repair the defect based on the selected robot's capability and the environmental context
-        2. ensure the parameters of the actions are correctly set
-        3. once the robot has finished the task, it should unload all the equipment
-        
+        Key Considerations:
+        - The robot is equipped with a single arm and can "load" only one piece of equipment at a time. It must "unload" before loading another.
+        - Actions for the robot are parameterized, such as 'spray(element_id)', where 'element_id' is the node ID from the 3D scene graph.
+        - Ensure that the action sequence strictly uses node IDs from the provided environmental data.
+        - Carefully consider the relationship between each action and the equipment loaded.
+        - At the conclusion of the task, ensure the robot unloads all equipment.
+
+        Your objectives are:
+        1. Develop a comprehensive and precise action sequence for the selected robot to execute the repair, leveraging its capabilities and the environmental context provided.
+        2. Integrate parameters into the actions as specified in the robot's action list, utilizing node IDs from the 3D scene graph.
+
         The final output should be a JSON object with the following fields:
         - action_sequence: List[str]
-        - reasoning: str
 
-        For example output:
-        {
-            "action_sequence": ["loadArm(sprayGun, cleaning Solution)", "spray(4068)", "unloadArm()", "loadArm(wiper)", "wipeSurface(4068)", "unloadArm()"],
-        }
+
+        example output:
+        {{
+            "action_sequence": ['loadArm(sprayGun, cleaning Solution)', 'spray(4068)', 'unloadArm()', 'loadArm(wiper)', 'wipeSurface(4068)', 'unloadArm()'],
+        }}
         """
 
     # API call
-    response = client.beta.chat.completions.parse(
+    response = client.chat.completions.create(
         model=gpt_model,  # Use a model that supports structured outputs
         messages=[
-            {"role": "system", "content": "You are an assistant that helps with robot action planning."},
             {"role": "user", "content": prompt}
-        ],
-        response_format=RepairPlan,  # Use Pydantic model to define output schema
-        temperature=0,
-        max_tokens= 500,
+        ]
     )
 
-    output = response.choices[0].message.parsed
+    output = response.choices[0].message.content
+    # print(output)
+    output = extract_json(output)
+
     # Return the result
-    return output.action_sequence, output.reasoning
+    return output['action_sequence']
 
 # Example function call
 # user_info = "there is a stain on the wall"
