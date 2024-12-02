@@ -44,21 +44,20 @@ def is_valid_path(path, scene_graph_links):
     return True  # All segments are valid
 
 
-def evaluate_path_planner(trial_number, gpt_model):
-    """
-    Evaluates the LLM-based path planner against the A* path planner over a number of trials.
-
-    Parameters:
-        trial_number (int): The number of trials to run.
-        gpt_model (str): The name or identifier of the GPT model to use.
-
-    Returns:
-        dict: A dictionary containing the success rate, average optimal score,
-              and detailed results for each trial.
-    """
-    success_count = 0
-    total_optimal_score = 0
+def evaluate_path_planner(trial_number, gpt_model, target_rooms: dict = None):
     trial_results = []
+    if target_rooms is None:
+        target_rooms = {"distance1": 45,
+                        "distance2": 44, 
+                        "distance3": 60, 
+                        "distance4": 42, 
+                        "distance5": 38,
+                        "distance6": 34,
+                        "distance7": 33,
+                        "distance8": 48,
+                        "distance9": 49,
+                        "distance10": 32,
+                    }
 
     # Ensure directories for images exist
     a_star_dir = "/Users/nayunkim/Documents/GitHub/repairPlan/outputs/evaluation_path/a_star"
@@ -73,14 +72,13 @@ def evaluate_path_planner(trial_number, gpt_model):
         # Load the global scene graph
         scene_graph = GLOBAL_SCENE_GRAPH
 
-        # Randomly select start_room and target_room from 3 to 61, ensuring they are different
         start_room = robots_withConfig["robot_storage"]["room_id"]
-        room_choices = [room for room in range(3, 62) if room != start_room]
-        target_room = random.choice(room_choices)# 62 because the end value is exclusive
+        target_room = target_rooms[f"distance{trial}"]
 
         # Get paths from both planners
         path = get_navigationPath_o1(target_room, scene_graph, gpt_model)
         path_a_star = a_star_path_planner(scene_graph, start_room, target_room)
+        print(f"trial: node distance{trial}")
         print(f"llm path: {path}")
         print(f"a* path: {path_a_star}")
 
@@ -107,7 +105,7 @@ def evaluate_path_planner(trial_number, gpt_model):
 
         # Visualize the LLM-based path and save the image
         if path and isinstance(path, list):
-            path_planner_image_output = f"{path_planner_dir}/trial_{trial}.jpg"
+            path_planner_image_output = f"{path_planner_dir}/{gpt_model}/trial_{trial}.jpg"
             visualize_navigation(
                 path,                 # The navigation path
                 None,                 # defect_id (set to None or appropriate value)

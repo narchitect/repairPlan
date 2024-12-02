@@ -11,7 +11,7 @@ simple_tests: List[Tuple[str, Tuple[Optional[int], Optional[int]]]] = [
     ("The wall with window ID 4055 needs to be painted.", (1042, 32)),
     ("The ceiling in room ID 32 is damaged.", (2055, 32)),
     ("The object located at [-26.1239, -7.47, 1.85] has a crack.", (1116, 7)),
-    ("The object with size [0.0, 3.36, 3.7] has a crack.", (1117, 7)),
+    ("The ceiling with the size [9.799, 23.86, 0.0] has a crack.", (2024, 40)),
     ("The wall that has a window has a crack in room 11.", (1043, 11)),
     ("The wall with 8 doors in the room id 6 needs to be painted.", (1211, 6)),
     ("The wall that doesn't have any windows or doors in the rooom id 12 has a crack.", (1077, 12)),
@@ -22,18 +22,18 @@ simple_tests: List[Tuple[str, Tuple[Optional[int], Optional[int]]]] = [
 complex_tests: List[Tuple[str, Tuple[Optional[int], Optional[int]]]] = [
     # (user_input, (Defect_id, Room_id))
     ("The largest door in the room id 9  is damaged.", (5000, 9)),
-    ("The wall in room id 18 that is nearest to room 19 has a crack.", (1093, 18)),
+    ("The wall in room ID 18 closest to the boundary with room ID 19 has a crack.", (1093, 18)),
     ("The door in room ID 42 that connects to room ID 41 needs cleaning.", (5061, 42)),
-    ("The wall that faces north in the room id 40 has mold.", (1157, 40)),
-    ("The wall immediately to the left upon entering door id 5059 in room ID 39 has graffiti.", (1118, 39)),
-    ("There seems to be water dripping from above in the room id 7; perhaps there is a crack.", (2000, 7)),
+    ("The wall located on the north side in room ID 40 has mold.", (1157, 40)),
+    ("The wall to the immediate left after entering through door ID 5059 in room ID 39 has graffiti.", (1118, 39)),
+    ("There seems to be water dripping from above in room ID 7, which may indicate a crack.", (2000, 7)),
     ("It feels like cold air is coming from outside in the room id 42.", (4022, 42)),
     ("The most northern door in the largest room is jammed.", (5065, 40)),
-    ("The wall with one window in the room immediately to the right upon entering room id 26 has a crack.", (1024, 27)),
-    ("In the room that has at least one door and one window, the window in the smallest room needs to be cleaned.", (4029, 54)),
+    ("The wall with one window in the room directly to the right of the entrance to room ID 26 has a crack.", (1024, 27)),
+    ("Among the rooms with at least one door and one window, the window in the smallest room needs to be cleaned.", (4029, 54)),
 ]
 
-def evaluate_identify_defect_node(gpt_model: str = "gpt-4o"):
+def evaluate_identify_defect_node(gpt_model: str = "gpt-4o", simple_trial_ids: Optional[List[int]] = None, complex_trial_ids: Optional[List[int]] = None):
     simple_correct = 0
     complex_correct = 0
 
@@ -41,6 +41,9 @@ def evaluate_identify_defect_node(gpt_model: str = "gpt-4o"):
 
     print("Evaluating Simple Inputs:\n")
     for idx, (user_input, ground_truth) in enumerate(simple_tests):
+        if simple_trial_ids is not None and idx + 1 not in simple_trial_ids:
+            continue
+
         predicted_defect_id, predicted_room_id = identify_defect_node(user_input, scene_graph, gpt_model)
         is_correct = (predicted_defect_id == ground_truth[0]) and (predicted_room_id == ground_truth[1])
 
@@ -57,6 +60,9 @@ def evaluate_identify_defect_node(gpt_model: str = "gpt-4o"):
 
     print("Evaluating Complex Inputs:\n")
     for idx, (user_input, ground_truth) in enumerate(complex_tests):
+        if complex_trial_ids is not None and idx + 1 not in complex_trial_ids:
+            continue
+
         predicted_defect_id, predicted_room_id = identify_defect_node(user_input, scene_graph, gpt_model)
         is_correct = (predicted_defect_id == ground_truth[0]) and (predicted_room_id == ground_truth[1])
 
@@ -72,6 +78,5 @@ def evaluate_identify_defect_node(gpt_model: str = "gpt-4o"):
     print(f"Complex Inputs Accuracy: {complex_accuracy:.2f}%\n")
 
     print(f"=== End of Evaluation Trial ===")
-
 # Example usage:
 # evaluate_identify_defect_node( gpt_model="gpt-4o")
