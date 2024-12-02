@@ -46,6 +46,9 @@ def is_valid_path(path, scene_graph_links):
 
 def evaluate_path_planner(trial_number, gpt_model, target_rooms: dict = None):
     trial_results = []
+    success_count = 0
+    total_optimal_score = 0
+
     if target_rooms is None:
         target_rooms = {"distance1": 45,
                         "distance2": 44, 
