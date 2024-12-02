@@ -40,7 +40,10 @@ def identify_defect_node(user_input: str, scene_graph: Any, gpt_model: str = "gp
     output_json = extract_json(output)
     # print(output_json)
     # print(type(output_json))
-    return output_json["Defect_id"], output_json['Room_id']
+    if isinstance(output_json, dict):
+        return output_json["Defect_id"], output_json['Room_id']
+    else:
+        return output_json
 
 def select_robot(user_input, defect_id, robot_db, gpt_model: str = "gpt-4o") -> tuple[Any, Any]:
     if isinstance(defect_id, list):

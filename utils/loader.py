@@ -16,10 +16,10 @@ def extract_json(response_content):
             return json.loads(json_output)  # Parse and return the JSON content
         except json.JSONDecodeError:
             print("An error occurred while parsing the json response")
-            return None
+            return response_content
     else:
         print("Can't find the JSON output section")
-        return None
+        return response_content
 
 # Global full scene graph 
 SCENE_GRAPH_PATH = "/Users/nayunkim/Documents/GitHub/repairPlan/data/sceneGraphs/new_structure/3dsg_full_fixed_doors.json"
